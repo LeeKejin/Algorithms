@@ -10,8 +10,9 @@ public class Leet26
         {
             if ( nums[ cur ] != nums[ i ] && nums[ cur ] < nums[ i ] )
             {
-                nums[ cur + 1 ] = nums[ i ];
                 cur++;
+                nums[ cur ] = nums[ i ];
+
             }
         }
         return cur + 1;
