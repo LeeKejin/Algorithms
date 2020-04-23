@@ -1,13 +1,13 @@
 package com.algorithms.array;
 
-public class DynamicArray
+public class DynamicArray< E >
 {
-    private int[] data;
+    private E[] data;
     private int size;
 
     public DynamicArray( int capacity )
     {
-        data = new int[ capacity ];
+        data = ( E[] ) new Object[ capacity ];
         size = 0;
     }
 
@@ -31,78 +31,84 @@ public class DynamicArray
         return size == 0;
     }
 
-    public int get( int index )
+    public E get( int index )
     {
         if ( index < 0 || index > size ) throw new RuntimeException( "Invalid value" );
         return data[ index ];
     }
 
-    public void set( int index, int value )
+    public void set( int index, E value )
     {
         if ( index < 0 || index > size ) throw new RuntimeException( "Invalid value" );
         data[ index ] = value;
     }
 
-    public boolean contains( int value )
+    public boolean contains( E value )
     {
-        for ( int v : data )
+        for ( E e : data )
         {
-            if ( v == value ) return true;
+            if ( e.equals( value ) ) return true;
         }
         return false;
     }
 
-    public int find( int value )
+    public int find( E value )
     {
         for ( int i = 0; i < size; i++ )
         {
-            if ( data[ i ] == value ) return i;
+            if ( data[ i ].equals( value ) ) return i;
         }
         return -1;
     }
 
-    public void removeElement( int value )
+    public void removeElement( E value )
     {
         int index = find( value );
         if ( index == -1 ) return;
         remove( index );
     }
 
-    public int remove( int index )
+    public E remove( int index )
     {
         if ( index < 0 || index > size ) throw new RuntimeException( "Invalid value" );
-        int result = data[ index ];
-        for ( int i = index; i < size; i++ )
+        E result = data[ index ];
+        for ( int i = index + 1; i < size; i++ )
         {
-            data[ i ] = data[ i + 1 ];
+            data[ i - 1 ] = data[ i ];
         }
         size--;
+        data[ size ] = null;
+        if ( size == data.length / 2 ) resize( data.length / 2 );
         return result;
     }
 
-    public int removeFirst()
+    public E removeFirst()
     {
         return remove( 0 );
     }
 
-    public int removeLast()
+    public E removeLast()
     {
         return remove( size - 1 );
     }
 
-    public void addFirst( int value )
+    public void addFirst( E value )
     {
         add( 0, value );
     }
 
-    public void addLast( int value )
+    public void addLast( E value )
     {
         add( size, value );
     }
 
-    public void add( int index, int value )
+    public void add( int index, E value )
     {
         if ( index < 0 || index > size ) throw new RuntimeException( "Invalid value" );
+        if ( size == data.length )
+        {
+            resize( 2 * size );
+        }
         for ( int i = size - 1; i >= index; i-- )
         {
             data[ i + 1 ] = data[ i ];
@@ -111,13 +117,24 @@ public class DynamicArray
         size++;
     }
 
+    private void resize( int newCapacity )
+    {
+        E[] newData = ( E[] ) new Object[ newCapacity ];
+        for ( int i = 0; i < size; i++ )
+        {
+            newData[ i ] = data[ i ];
+        }
+
+        data = newData;
+    }
+
     @Override
     public String toString()
     {
         StringBuilder builder = new StringBuilder();
         builder.append( String.format( "Size: %d, Capacity: %d \n", size, getCapacity() ) );
         builder.append( "[" );
-        for ( int value : data )
+        for ( E value : data )
         {
             builder.append( value + " " );
         }

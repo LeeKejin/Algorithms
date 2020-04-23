@@ -42,4 +42,22 @@ public class Leet283
             nums[ i ] = 0;
         }
     }
+
+    public void moveZeroesSwap( int[] nums )
+    {
+        int noneZero = 0;
+        for ( int i = 0; i < nums.length; i++ )
+        {
+            if ( nums[ i ] == 0 )
+            {
+                if ( nums[ noneZero ] != nums[ i ] )
+                {
+                    int temp = nums[ noneZero ];
+                    nums[ noneZero ] = nums[ i ];
+                    nums[ i ] = temp;
+                }
+                noneZero++;
+            }
+        }
+    }
 }
