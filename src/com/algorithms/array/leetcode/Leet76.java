@@ -1,6 +1,9 @@
 package com.algorithms.array.leetcode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Leet76
 {
@@ -16,51 +19,64 @@ public class Leet76
             }
             return s;
         }
+        if ( t.length() == 1 && s.indexOf( t ) == -1 ) return "";
+        if ( t.length() == 1 && s.indexOf( t ) != -1 ) return t;
         if ( s.indexOf( t ) != -1 ) return t;
         int r = 0;
         int l = 0;
-        HashMap< Character, Integer > map = new HashMap<>();
+        int length = s.length() + 1;
+        int begin = 0;
+        List< Map< Character, Integer > > list = new ArrayList<>();
         String res = s;
-        int times = 0;
-        while ( l < s.length() )
+        int[] freq = new int[ 256 ];
+        for ( char c : t.toCharArray() )
         {
-            if ( times < t.length() )
-            {
-                if ( r < s.length() && t.indexOf( s.charAt( r ) ) != -1 )
-                {
-                    map.put( s.charAt( r ), r );
-
-                }
-                r++;
-                if ( r > s.length() ) return "";
-            }
-            else
-            {
-                int first = s.length() + 1;
-                for ( Character c : map.keySet() )
-                {
-                    first = Math.min( first, map.get( c ) );
-                }
-
-                String temp = s.substring( first, r );
-                res = temp.length() < res.length() ? temp : res;
-                int count = 0;
-                for ( Character c : map.keySet() )
-                {
-                    l = map.get( c );
-                    count++;
-                    if ( count == 2 ) break;
-                }
-                if ( r == s.length() ) break;
-                r = l;
-                map.clear();
-
-            }
-            times++;
+            freq[ c ]++;
         }
 
-        return res;
+        while ( r < s.length() )
+        {
+            freq[ s.charAt( r ) ]--;
+            if ( freq[ s.charAt( r ) ] >= 0 )
+            {
+                Map< Character, Integer > map = new HashMap<>();
+                map.put( s.charAt( r ), r );
+                list.add( map );
 
+            }
+            while ( list.size() == t.length() )
+            {
+                freq[ s.charAt( l ) ]++;
+                l = getIndex( list.get( 0 ) );
+                if ( length > ( r - l + 1 ) )
+                {
+                    length = r - l + 1;
+                    begin = l;
+                }
+                l++;
+                r = l;
+                --r;
+                for ( char c : t.toCharArray() )
+                {
+                    freq[ c ]++;
+                }
+                list.clear();
+            }
+            r++;
+
+        }
+
+        return length == ( s.length() + 1 ) ? "" : s.substring( begin, begin + length );
+
+    }
+
+    static int getIndex( Map< Character, Integer > map )
+    {
+        for ( Character c : map.keySet() )
+        {
+            return map.get( c );
+        }
+        return -1;
     }
 
     public static String minWindowSolution( String s, String t )
@@ -88,7 +104,7 @@ public class Leet76
                     if ( r - l + 1 < length )
                     {
                         begin = l;
-                        length = Math.min( length, r - l + 1 );
+                        length = r - l + 1;
                     }
 
                     count++;
@@ -104,8 +120,6 @@ public class Leet76
 
     public static void main( String[] args )
     {
-        //        "cabwefgewcwaefgcf"
-        //        "cae"
-        System.out.println( minWindowSolution( "cabwefgewcwaefgcf", "cae" ) );
+        System.out.println( minWindow( "cabwefgewcwaefgcf", "cae" ) );
     }
 }
