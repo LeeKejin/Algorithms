@@ -1,4 +1,4 @@
-package com.algorithms.link;
+package com.algorithms.link.leetcode;
 
 public class Leet92
 {
