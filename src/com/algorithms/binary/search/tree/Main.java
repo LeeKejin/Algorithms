@@ -5,16 +5,12 @@ public class Main
     public static void main( String[] args )
     {
         BST< Integer > bst = new BST<>();
-        int[] nums = { 5, 3, 6, 8, 4, 2 };
+        int[] nums = { 41, 22, 58, 15, 33, 50, 60, 13, 37, 42, 53, 59, 63 };
         for ( int num : nums )
         {
             bst.add( num );
         }
-
-        //        bst.preOrderWithoutRecursion();
-        int v = bst.removeMin();
-        //        System.out.println( v );
+        bst.removeNode( 53 );
         bst.retrieveByLayer();
-        //        bst.retrieveByLayer();
     }
 }

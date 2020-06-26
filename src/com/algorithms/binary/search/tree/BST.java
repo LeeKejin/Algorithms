@@ -182,12 +182,50 @@ public class BST< E extends Comparable< E > >
 
     private Node removeMin( Node node )
     {
-        if ( node.left != null )
+        if ( node.left == null )
         {
-            node.left = removeMin( node.left );
+            Node rightNode = node.right;
+            node.right = null;
+            size--;
+            return rightNode;
+        }
+        node.left = removeMin( node.left );
+        return node;
+    }
+
+    public void removeNode( E e )
+    {
+        root = removeNode( root, e );
+    }
+
+    private Node removeNode( Node node, E e )
+    {
+        if ( node == null ) return null;
+        if ( e.compareTo( node.e ) < 0 )
+        {
+            node.left = removeNode( node.left, e );
             return node;
         }
-        size--;
-        return node.right;
+        else if ( e.compareTo( node.e ) > 0 )
+        {
+            node.right = removeNode( node.right, e );
+            return node;
+        }
+        if ( node.right == null )
+        {
+            size--;
+            return node.left;
+        }
+        if ( node.left == null )
+        {
+            size--;
+            return node.right;
+        }
+        E val = minimum( node.right );
+        Node successor = new Node( val );
+        successor.left = node.left;
+        successor.right = removeMin( node.right );
+        return successor;
+
     }
 }
