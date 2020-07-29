@@ -7,9 +7,7 @@ public class Leet257
 {
     public static List< String > binaryTreePaths( TreeNode root )
     {
-
         return find( root );
-
     }
 
     private static List< String > find( TreeNode node )
@@ -35,6 +33,34 @@ public class Leet257
             list.add( s );
         }
         return list;
+    }
+
+    static List< String > results = new ArrayList<>();
+
+    public List< String > binaryTreePathsEasy( TreeNode root )
+    {
+        if ( root == null ) return new ArrayList<>();
+        findPath( root, "" );
+        return results;
+    }
+
+    private static void findPath( TreeNode node, String str )
+    {
+        if ( node.left == null && node.right == null )
+        {
+            str += node.val;
+            results.add( str );
+            return;
+        }
+        if ( node.left != null )
+        {
+            findPath( node.left, str + node.val + "->" );
+        }
+
+        if ( node.right != null )
+        {
+            findPath( node.right, str + node.val + "->" );
+        }
     }
 
     public static void main( String[] args )

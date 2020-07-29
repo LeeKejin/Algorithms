@@ -1,6 +1,6 @@
 package com.algorithms.binary.search.tree.leetcode;
 
-public class Leet236
+public class Leet236_1
 {
     public static TreeNode lowestCommonAncestorSlowSolution( TreeNode root, TreeNode p, TreeNode q )
     {

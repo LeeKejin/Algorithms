@@ -97,6 +97,35 @@ public class Leet113
         list.remove( list.size() - 1 );
     }
 
+    /*
+     * Clean solution
+     */
+    List< List< Integer > > results = new ArrayList<>();
+
+    public List< List< Integer > > pathSumCleanSolution( TreeNode root, int sum )
+    {
+        pathSum( root, sum, new ArrayList< Integer >() );
+        return results;
+    }
+
+    private void pathSum( TreeNode node, int sum, ArrayList< Integer > list )
+    {
+        if ( node == null ) return;
+        list.add( node.val );
+
+        if ( sum - node.val == 0 && node.left == null && node.right == null )
+        {
+            results.add( new ArrayList<>( list ) );
+            list.remove( list.size() - 1 );
+            return;
+        }
+
+        pathSum( node.left, sum - node.val, list );
+        pathSum( node.right, sum - node.val, list );
+        list.remove( list.size() - 1 );
+
+    }
+
     public static void main( String[] args )
     {
         //        TreeNode root = new TreeNode( 5 );

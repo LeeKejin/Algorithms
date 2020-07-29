@@ -1,6 +1,6 @@
 package com.algorithms.binary.search.tree.leetcode;
 
-public class Leet108
+public class Leet108_1
 {
     public static TreeNode sortedArrayToBST( int[] nums )
     {

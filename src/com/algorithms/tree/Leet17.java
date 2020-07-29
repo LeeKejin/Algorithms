@@ -1,58 +1,85 @@
 package com.algorithms.tree;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Leet17
 {
-    static Map< Character, List< String > > map = new HashMap<>();
     static List< String > results = new ArrayList<>();
-    static int size = 0;
+    static List< String > list = new ArrayList<>();
 
     static
     {
-        List< String > list = new ArrayList<>();
-        list.add( "a" );
-        list.add( "b" );
-        list.add( "c" );
-        map.put( '2', list );
-
+        list.add( "" );
+        list.add( "" );
+        list.add( "abc" );
+        list.add( "def" );
+        list.add( "ghi" );
+        list.add( "jkl" );
+        list.add( "mno" );
+        list.add( "pqrs" );
+        list.add( "tuv" );
+        list.add( "wxyz" );
     }
 
-    public List< String > letterCombinations( String digits )
+    public static List< String > letterCombinations( String digits )
     {
-        if ( results.isEmpty() )
-        {
-            size = digits.length();
-            results.addAll( map.get( digits.charAt( 0 ) ) );
-        }
-
-        letterCombinations( digits.substring( 1 ) );
-        if ( )
-
-            List< String > list = new ArrayList<>();
-        for ( int i = 0; i < digits.length(); i++ )
-        {
-            composeResults( map.get( digits.charAt( i ) ), list );
-        }
+        composeResults( digits, 0, "" );
+        return results;
     }
 
-    private void composeResults( List< String > subList, List< String > list )
+    private static void composeResults( String digits, int index, String word )
     {
-        if ( list.isEmpty() )
+
+        if ( digits == null || digits.equals( "" ) ) return;
+        if ( index == digits.length() )
         {
-            list.addAll( subList );
+            results.add( word );
             return;
         }
-
-        for ( int i = 0; i < list.size(); i++ )
+        String letters = list.get( digits.charAt( index ) - '0' );
+        for ( int i = 0; i < letters.length(); i++ )
         {
-            for ( int j = 0; j < subList.size(); j++ )
-            {
-                String val =
-            }
+            composeResults( digits, index + 1, word + letters.charAt( i ) );
         }
     }
+
+    public static void main( String[] args )
+    {
+        letterCombinations( "23" );
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+if ( index == digits.length() )
+        {
+            results.add( word );
+            return;
+        }
+        if ( digits.charAt( index ) == '0' || digits.charAt( index ) == '1' ) return;
+
+        String letters = list.get( digits.charAt( index ) - '0' );
+        for ( int i = 0; i < letters.length(); i++ )
+        {
+            composeResults( digits, index + 1, word + letters.charAt( i ) );
+        }
+ */

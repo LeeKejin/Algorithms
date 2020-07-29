@@ -16,12 +16,14 @@ public class Leet222
 
         if ( left == right )
         {
-            int val = ( int ) ( Math.pow( 2, left ) + countNodesSolution1( root.right ) );
+            int v = ( int ) Math.pow( 2, left );
+            int val = ( int ) ( v + countNodesSolution1( root.right ) );
             return val;
         }
         else
         {
-            int val = ( int ) ( Math.pow( 2, right ) + countNodesSolution1( root.left ) );
+            int v = ( int ) Math.pow( 2, right );
+            int val = ( int ) ( v + countNodesSolution1( root.left ) );
             return val;
         }
     }
@@ -37,6 +39,51 @@ public class Leet222
         return count;
     }
 
+    static int result = 0;
+
+    public int countNodesNormalSolution( TreeNode root )
+    {
+        if ( root == null ) return 0;
+        count( root );
+        return result;
+    }
+
+    public static void count( TreeNode node )
+    {
+        if ( node.left == null && node.right == null )
+        {
+            result++;
+            return;
+        }
+        if ( node.left != null && node.right != null )
+        {
+            result++;
+        }
+        if ( node.left != null )
+        {
+
+            if ( node.right == null && node.left.left == null && node.left.right == null )
+            {
+                result++;
+            }
+
+            count( node.left );
+
+        }
+
+        if ( node.right != null )
+        {
+
+            if ( node.left == null && node.right.left == null && node.right.right == null )
+            {
+                result++;
+
+            }
+
+            count( node.right );
+        }
+    }
+
     public static void main( String[] args )
     {
         TreeNode root = new TreeNode( 1 );
@@ -47,6 +94,5 @@ public class Leet222
 
         root.right.left = new TreeNode( 6 );
         System.out.println( countNodesSolution1( root ) );
-        //        System.out.println( 1 << 3 );
     }
 }

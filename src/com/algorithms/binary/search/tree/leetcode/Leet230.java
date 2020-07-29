@@ -20,6 +20,32 @@ public class Leet230
 
     }
 
+    public static int kthSmallest1( TreeNode root, int k )
+    {
+        int left = nodeNumber( root.left );
+        if ( left + 1 == k )
+        {
+            return root.val;
+        }
+        if ( left + 1 < k )
+        {
+            return kthSmallest1( root.right, k - left - 1 );
+        }
+
+        return kthSmallest1( root.left, k );
+
+    }
+
+    public static int nodeNumber( TreeNode node )
+    {
+        if ( node == null )
+        {
+            return 0;
+        }
+
+        return nodeNumber( node.left ) + nodeNumber( node.right ) + 1;
+    }
+
     public static void main( String[] args )
     {
         TreeNode root = new TreeNode( 5 );
