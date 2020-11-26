@@ -4,6 +4,45 @@ import java.util.PriorityQueue;
 
 public class Leet215
 {
+    public int findKthLargestEasyToUnderstand( int[] nums, int k )
+    {
+        int[] res = quickSortImplement( nums, 0, nums.length );
+
+        return res[ nums.length - k ];
+    }
+
+    public int[] quickSortImplement( int[] arr, int l, int r )
+    {
+        if ( l >= r ) return arr;
+        int pivot = partition( arr, l, r );
+        int temp = arr[ pivot ];
+        arr[ pivot ] = arr[ l ];
+        arr[ l ] = temp;
+        quickSortImplement( arr, l, pivot );
+        quickSortImplement( arr, pivot + 1, r );
+        return arr;
+    }
+
+    public int partition( int[] arr, int start, int end )
+    {
+        if ( start >= end ) return start;
+        int pivot = arr[ start ];
+        int j = start + 1;
+        for ( int i = start + 1; i < end; i++ )
+        {
+            if ( arr[ i ] >= pivot ) continue;
+            else
+            {
+
+                int temp = arr[ i ];
+                arr[ i ] = arr[ j ];
+                arr[ j ] = temp;
+                j++;
+            }
+        }
+        return j - 1;
+    }
+
     public static int findKthLargest( int[] nums, int k )
     {
         PriorityQueue< Integer > q = new PriorityQueue< Integer >( k );

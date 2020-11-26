@@ -2,27 +2,18 @@ package com.algorithms.binary.search.tree.leetcode;
 
 public class Leet108_1
 {
-    public static TreeNode sortedArrayToBST( int[] nums )
+    public TreeNode sortedArrayToBST( int[] nums )
     {
-        return insert( 0, nums.length - 1, nums );
+        return generateTree( 0, nums.length - 1, nums );
     }
 
-    private static TreeNode insert( int start, int end, int[] nums )
+    private TreeNode generateTree( int l, int r, int[] nums )
     {
-        if ( start > end ) return null;
-        int index = ( end + start ) / 2;
-        TreeNode root = new TreeNode( nums[ index ] );
-        root.left = insert( start, index - 1, nums );
-        root.right = insert( index + 1, end, nums );
-        return root;
-    }
-
-    public static void main( String[] args )
-    {
-        int[] arr = new int[] { -10, -3, 0, 5, 9 };
-        //        int[] arr = new int[] { 1, 3 };
-        TreeNode root = sortedArrayToBST( arr );
-        System.out.println( root );
-
+        if ( l < 0 || r > nums.length - 1 || l > r ) return null;
+        int mid = l + ( r - l ) / 2;
+        TreeNode node = new TreeNode( nums[ mid ] );
+        node.left = generateTree( l, mid - 1, nums );
+        node.right = generateTree( mid + 1, r, nums );
+        return node;
     }
 }
