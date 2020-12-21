@@ -2,6 +2,7 @@ package com.algorithms.sword.means.offer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 public class Leet40
@@ -12,6 +13,34 @@ public class Leet40
     {
         if ( k == 0 ) return new int[] {};
         return quickSort( arr, 0, arr.length, k );
+    }
+
+    public int[] getLeastNumbersPriorityQueue( int[] arr, int k )
+    {
+        if ( k == 0 || arr.length == 0 ) return new int[] {};
+        //        Collections.reverseOrder()
+        PriorityQueue< Integer > queue = new PriorityQueue<>( k, ( a, b ) -> a >= b ? -1 : 1 );
+        for ( int val : arr )
+        {
+            if ( queue.size() < k )
+            {
+                queue.add( val );
+            }
+            else
+            {
+                if ( queue.peek() > val )
+                {
+                    queue.poll();
+                    queue.add( val );
+                }
+            }
+        }
+        int[] results = new int[ k ];
+        for ( int i = 0; i < k; i++ )
+        {
+            results[ i ] = queue.poll();
+        }
+        return results;
     }
 
     private int[] quickSort( int[] arr, int start, int end, int k )
