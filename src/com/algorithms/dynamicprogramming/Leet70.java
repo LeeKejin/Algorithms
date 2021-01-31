@@ -1,76 +1,59 @@
 package com.algorithms.dynamicprogramming;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Leet70
 {
-    static int count = 0;
-    static int[] list = new int[ 5000 ];
+    Map< Integer, Integer > map = new HashMap<>();
 
-    public static int climbStairsDynamicProgramming( int n )
+    public int climbStairs( int n )
     {
-        int[] arr = new int[ n + 1 ];
-
-        arr[ 0 ] = 1;
-        arr[ 1 ] = 1;
-
-        for ( int i = 2; i < n + 1; i++ )
+        if ( n == 1 )
         {
-            arr[ i ] = arr[ i - 1 ] + arr[ i - 2 ];
+            map.put( 1, 1 );
+            return 1;
         }
-        return arr[ n ];
+        if ( n == 2 )
+        {
+            map.put( 2, 2 );
+            return 2;
+        }
+        if ( map.containsKey( n ) ) return map.get( n );
+
+        int sum = climbStairs( n - 1 ) + climbStairs( n - 2 );
+        map.put( n, sum );
+        return map.get( n );
+
     }
 
-    public static int climbStairs( int n )
+    public int climbStairsSolution2( int n )
     {
-        if ( n < 0 ) return 0;
-        for ( int i = 0; i < 5000; i++ )
+        if ( n == 1 )
         {
-            list[ i ] = -1;
+            return 1;
         }
-        return calculate( n );
+        if ( n == 2 )
+        {
+            return 2;
+        }
+        for ( int i = 1; i <= n; i++ )
+        {
+            if ( i == 1 )
+            {
+                map.put( i, 1 );
+                continue;
+            }
+            if ( i == 2 )
+            {
+                map.put( i, 2 );
+                continue;
+            }
+            int sum = map.get( i - 1 ) + map.get( i - 2 );
+            map.put( i, sum );
+        }
+
+        return map.get( n );
+
     }
-
-    private static int calculate( int n )
-    {
-        if ( n == 1 ) return 1;
-        if ( n == 2 ) return 2;
-        int k = 0;
-        if ( list[ n - 1 ] != -1 )
-        {
-            k = list[ n - 1 ];
-        }
-        else
-        {
-            k = calculate( n - 1 );
-            list[ n - 1 ] = k;
-
-        }
-        int m = 0;
-        if ( list[ n - 2 ] != -1 )
-        {
-            m = list[ n - 2 ];
-        }
-        else
-        {
-            m = calculate( n - 2 );
-            list[ n - 2 ] = m;
-
-        }
-        return m + k;
-    }
-
-    private static int calculate1( int n )
-    {
-        if ( n == 0 || n == 1 ) return 1;
-        if ( list[ n ] == -1 )
-        {
-            list[ n ] = calculate1( n - 1 ) + calculate1( n - 2 );
-        }
-        return list[ n ];
-    }
-
-    public static void main( String[] args )
-    {
-        System.out.print( climbStairs( 44 ) );
-    }
-
 }

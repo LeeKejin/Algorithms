@@ -1,5 +1,7 @@
 package com.algorithms.dynamicprogramming;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Leet120
@@ -33,18 +35,50 @@ public class Leet120
     }
 
     //optimize space
-    public static int minimumTotalOptimize( int[][] triangle )
+    public int minimumTotal( List< List< Integer > > triangle )
     {
-        int n = triangle.length;
-        int dp[] = new int[ n + 1 ];
-        for ( int i = n - 1; i >= 0; i-- )
+        List< Integer > results = new ArrayList<>();
+        int size = triangle.size() - 1;
+        results.addAll( triangle.get( size ) );
+        for ( int i = size - 1; i >= 0; i-- )
         {
-            for ( int j = 0; j <= i; j++ )
+            for ( int j = 0; j < triangle.get( i ).size(); j++ )
             {
-                dp[ j ] = Math.min( dp[ j ], dp[ j + 1 ] ) + triangle[ i ][ j ];
+                int val = Math.min( results.get( j ), results.get( j + 1 ) ) + triangle.get( i ).get( j );
+                results.set( j, val );
             }
         }
-        return dp[ 0 ];
+        return results.get( 0 );
+    }
+
+    public int minimumTotalTopToBottom( List< List< Integer > > triangle )
+    {
+        List< List< Integer > > triangleResults = new ArrayList<>();
+        for ( List< Integer > list : triangle )
+        {
+            List< Integer > result = new ArrayList<>();
+            for ( int v : list )
+            {
+                result.add( Integer.MAX_VALUE );
+            }
+            triangleResults.add( result );
+        }
+        int initialVal = triangle.get( 0 ).get( 0 );
+        triangleResults.get( 0 ).set( 0, initialVal );
+        for ( int i = 1; i < triangle.size(); i++ )
+        {
+            List< Integer > previousValues = triangleResults.get( i - 1 );
+            List< Integer > values = triangle.get( i );
+            List< Integer > results = triangleResults.get( i );
+            for ( int j = 0; j < previousValues.size(); j++ )
+            {
+                results.set( j, Math.min( values.get( j ) + previousValues.get( j ), results.get( j ) ) );
+                results.set( j + 1, Math.min( values.get( j + 1 ) + previousValues.get( j ), results.get( j + 1 ) ) );
+            }
+        }
+        int last = triangleResults.size() - 1;
+        return Collections.min( triangleResults.get( last ) );
+
     }
 
     public static void main( String[] args )
