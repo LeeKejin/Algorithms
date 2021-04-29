@@ -6,25 +6,24 @@ public class Leet139
 {
     public boolean wordBreak( String s, List< String > wordDict )
     {
+        if ( s.length() == 0 || wordDict.size() == 0 ) return false;
+
         boolean dp[] = new boolean[ s.length() + 1 ];
         dp[ 0 ] = true;
-        for ( int i = 0; i < s.length(); i++ )
+        for ( int i = 1; i <= s.length(); i++ )
         {
-            if ( dp[ i ] )
+            if ( dp[ i - 1 ] )
             {
                 for ( String word : wordDict )
                 {
-                    String target = s.substring( i );
-                    if ( target.startsWith( word ) )
+                    String str = s.substring( i - 1 );
+                    if ( str.startsWith( word ) )
                     {
-                        int len = word.length();
-                        if ( len + i < dp.length )
-                        {
-                            dp[ i + len ] = true;
-                        }
+                        dp[ i + word.length() - 1 ] = true;
                     }
                 }
             }
+
         }
         return dp[ s.length() ];
     }

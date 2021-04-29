@@ -1,157 +1,92 @@
 package com.algorithms.tree.backtrace.twodimension;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Leet79
 {
-    static int[][] d = new int[][] { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
-    static List< List< Boolean > > visited = new ArrayList<>();
-
-    public static boolean exist( char[][] board, String word )
+    public boolean exist( char[][] board, String word )
     {
-        if ( word == null ) return false;
-        for ( int i = 0; i < board.length; i++ )
-        {
-            List< Boolean > list = new ArrayList<>();
-            for ( int j = 0; j < board[ 0 ].length; j++ )
-            {
-                list.add( false );
-            }
-            visited.add( list );
-        }
         for ( int i = 0; i < board.length; i++ )
         {
             for ( int j = 0; j < board[ 0 ].length; j++ )
             {
-                if ( searchWord( board, word, 0, i, j ) )
+                if ( board[ i ][ j ] == word.charAt( 0 ) )
                 {
-                    return true;
+                    if ( dfs( board, i, j, word, 0 ) ) return true;
                 }
             }
         }
         return false;
     }
 
-    private static boolean searchWord( char[][] board, String word, int index, int startX, int startY )
+    private boolean dfs( char[][] board, int i, int j, String word, int index )
     {
-        //Last character in word
-        if ( index == word.length() - 1 )
+        if ( i < 0 || i >= board.length || j < 0 || j >= board[ 0 ].length || index >= word.length()
+            || word.charAt( index ) != board[ i ][ j ] )
         {
-            return board[ startX ][ startY ] == word.charAt( index );
+            return false;
         }
-        if ( board[ startX ][ startY ] == word.charAt( index ) )
+        if ( index + 1 == word.length() )
         {
-            visited.get( startX ).set( startY, true );
-            for ( int i = 0; i < 4; i++ )
-            {
-                int newX = startX + d[ i ][ 0 ];
-                int newY = startY + d[ i ][ 1 ];
-                if ( inArea( newX, newY, board ) && !visited.get( newX ).get( newY ) )
-                {
-                    if ( searchWord( board, word, index + 1, newX, newY ) )
-                    {
-                        return true;
-                    }
-                }
-            }
-            visited.get( startX ).set( startY, false ); // This is trace back!!!
+            return word.charAt( word.length() - 1 ) == board[ i ][ j ];
+        }
+        char ch = board[ i ][ j ];
+        board[ i ][ j ] = '#';
+        if ( dfs( board, i - 1, j, word, index + 1 ) ) return true;
+        if ( dfs( board, i + 1, j, word, index + 1 ) ) return true;
+        if ( dfs( board, i, j - 1, word, index + 1 ) ) return true;
+        if ( dfs( board, i, j + 1, word, index + 1 ) ) return true;
 
-        }
+        board[ i ][ j ] = ch;
         return false;
     }
 
-    private static boolean inArea( int newX, int newY, char[][] board )
-    {
-        return newX >= 0 && newX < board.length && newY >= 0 && newY < board[ 0 ].length;
-    }
+    boolean[][] used;
 
-    public static void main( String[] args )
-    {
-        char[][] board = new char[][]
-            { { 'A', 'B', 'C', 'E' },
-                { 'S', 'F', 'C', 'S' },
-                { 'A', 'D', 'E', 'E' } };
-        System.out.println( exist( board, "SEE" ) );
-    }
-
-    static boolean[][] used;
-
-    public static boolean existFaster( char[][] board, String word )
-    {
-        if ( word == null ) return false;
-
-        used = new boolean[ board.length ][ board[ 0 ].length ];
-
-        for ( int i = 0; i < board.length; i++ )
-        {
-            for ( int j = 0; j < board[ 0 ].length; j++ )
-            {
-                used[ i ][ j ] = false;
-            }
-        }
-
-        for ( int i = 0; i < board.length; i++ )
-        {
-            for ( int j = 0; j < board[ 0 ].length; j++ )
-            {
-                if ( findWord( board, word, 0, i, j ) )
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-
-    }
-
-    private static boolean findWord( char[][] board, String word, int index, int startX, int startY )
-    {
-        if ( index == word.length() - 1 )
-        {
-            return board[ startX ][ startY ] == word.charAt( index );
-        }
-        if ( board[ startX ][ startY ] == word.charAt( index ) )
-        {
-            used[ startX ][ startY ] = true;
-            //Up
-            if ( startY + 1 < board[ 0 ].length && !used[ startX ][ startY - 1 ] )
-            {
-                if ( findWord( board, word, index + 1, startX, startY + 1 ) )
-                {
-                    return true;
-                }
-            }
-
-            //Right
-            if ( startX + 1 < board.length && !used[ startX + 1 ][ startY ] )
-            {
-                if ( findWord( board, word, index + 1, startX + 1, startY ) )
-                {
-                    return true;
-                }
-            }
-
-            //Left
-            if ( startX - 1 >= 0 && !used[ startX - 1 ][ startY ] )
-            {
-                if ( findWord( board, word, index + 1, startX - 1, startY ) )
-                {
-                    return true;
-                }
-            }
-
-            //Down
-            if ( startY - 1 >= 0 && !used[ startX ][ startY - 1 ] )
-            {
-                if ( findWord( board, word, index + 1, startX, startY - 1 ) )
-                {
-                    return true;
-                }
-            }
-            used[ startX ][ startY ] = false;
-
-        }
-        return false;
-    }
+    //    public boolean exist1( char[][] board, String word )
+    //    {
+    //        if ( board.length == 0 ) return false;
+    //        int n = board.length;
+    //        int m = board[ 0 ].length;
+    //        used = new boolean[ n ][ m ];
+    //
+    //        for ( int i = 0; i < n; i++ )
+    //        {
+    //            for ( int j = 0; j < m; j++ )
+    //            {
+    //
+    //                if ( dfs( board, i, j, 0, word ) ) return true;
+    //            }
+    //        }
+    //        return false;
+    //    }
+    //
+    //    private boolean dfs( char[][] board, int i, int j, int index, String word )
+    //    {
+    //        if ( index + 1 == word.length() )
+    //        {
+    //            return word.charAt( index ) == board[ i ][ j ];
+    //        }
+    //        if ( board[ i ][ j ] == word.charAt( index ) )
+    //        {
+    //            used[ i ][ j ] = true;
+    //            if ( i - 1 >= 0 && !used[ i - 1 ][ j ] )
+    //            {
+    //                if ( dfs( board, i - 1, j, index + 1, word ) ) return true;
+    //            }
+    //
+    //            if ( i + 1 < board.length && !used[ i + 1 ][ j ] )
+    //            {
+    //                if ( dfs( board, i + 1, j, index + 1, word ) ) return true;
+    //            }
+    //            if ( j - 1 >= 0 && !used[ i ][ j - 1 ] )
+    //            {
+    //                if ( dfs( board, i, j - 1, index + 1, word ) ) return true;
+    //            }
+    //            if ( j + 1 < board[ 0 ].length && !used[ i ][ j + 1 ] )
+    //            {
+    //                if ( dfs( board, i, j + 1, index + 1, word ) ) return true;
+    //            }
+    //            used[ i ][ j ] = false;
+    //        }
+    //        return false;
+    //    }
 }

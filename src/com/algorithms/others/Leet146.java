@@ -2,6 +2,7 @@ package com.algorithms.others;
 
 public class Leet146
 {
+
     public static void main( String[] args )
     {
         LRUCacheWithNode cache = new LRUCacheWithNode( 2 );

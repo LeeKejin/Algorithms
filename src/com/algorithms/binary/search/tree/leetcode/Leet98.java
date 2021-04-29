@@ -42,4 +42,24 @@ public class Leet98
         pre = root.val;
         return isValidBST( root.right );
     }
+
+    List< Integer > values = new ArrayList<>();
+
+    public boolean isValidBSTInOrder( TreeNode root )
+    {
+        isValid( root );
+        for ( int i = 1; i < values.size(); i++ )
+        {
+            if ( values.get( i ) <= values.get( i - 1 ) ) return false;
+        }
+        return true;
+    }
+
+    private void isValid( TreeNode root )
+    {
+        if ( root == null ) return;
+        isValid( root.left );
+        values.add( root.val );
+        isValid( root.right );
+    }
 }

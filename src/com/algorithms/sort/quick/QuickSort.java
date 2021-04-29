@@ -2,6 +2,7 @@ package com.algorithms.sort.quick;
 
 import java.util.Random;
 
+import com.algorithms.sort.ArrayGeneration;
 import com.algorithms.sort.SortingHelper;
 
 public class QuickSort
@@ -30,7 +31,7 @@ public class QuickSort
         int pivot = arr[ start ];
 
         int j = start + 1;
-        for ( int i = start + 1; i < end; i++ )
+        for ( int i = start + 1; i <= end; i++ )
         {
             if ( arr[ i ] < pivot )
             {
@@ -56,7 +57,7 @@ public class QuickSort
         //        Integer[] arr = ArrayGeneration.generateRandomArray( 10000, 1 );
         Integer[] arr = new Integer[] { 7, 6, 5, 4, 3, 2, 1 };
         Integer[] res =
-            quickSort.quickSortImplement( arr, 0, 8 );
+            quickSort.quickSortImplement( ArrayGeneration.generateRandomArray( 10000, 10000 ), 0, 10000 - 1 );
 
         SortingHelper.isSorted( res );
         long endTime = System.nanoTime();

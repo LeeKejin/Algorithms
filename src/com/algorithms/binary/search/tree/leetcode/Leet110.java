@@ -18,23 +18,20 @@ public class Leet110
         return Math.abs( left - right ) <= 1 ? Math.max( left, right ) + 1 : -1;
     }
 
-    //This solution is more clear
-    public boolean isBalancedSolution1( TreeNode root )
+    public boolean isBalanced1( TreeNode root )
     {
-        if ( root == null ) return true;
-        int leftDepth = depth( root.left, 0 );
-        int rightDepth = depth( root.right, 0 );
-        if ( leftDepth == -1 || rightDepth == -1 ) return false;
-        return Math.abs( leftDepth - rightDepth ) <= 1;
+        return depth( root ) != -1;
     }
 
-    private int depth( TreeNode node, int count )
+    int depth( TreeNode node )
     {
-        if ( node == null ) return count;
-        int leftDepth = depth( node.left, count + 1 );
-        int rightDepth = depth( node.right, count + 1 );
-        int depth = Math.abs( leftDepth - rightDepth );
-        return depth <= 1 ? Math.max( leftDepth, rightDepth ) : -1;
+        if ( node == null ) return 0;
+        int left = depth( node.left );
+        if ( left == -1 ) return -1;
+        int right = depth( node.right );
+        if ( right == -1 ) return -1;
+        if ( Math.abs( left - right ) > 1 ) return -1;
+        return Math.max( left, right ) + 1;
     }
 
     public static void main( String[] args )

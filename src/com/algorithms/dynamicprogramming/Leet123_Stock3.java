@@ -26,4 +26,42 @@ public class Leet123_Stock3
             Math.max( dp[ prices.length - 1 ][ 1 ][ 0 ], dp[ prices.length - 1 ][ 2 ][ 0 ] ) );
     }
 
+    public int maxProfitDP( int[] prices )
+    {
+        if ( prices.length == 0 || prices.length == 1 ) return 0;
+        if ( 4 >= prices.length )
+        {
+            int res = 0;
+            for ( int i = 1; i < prices.length; i++ )
+            {
+                if ( prices[ i ] > prices[ i - 1 ] )
+                {
+                    res += ( prices[ i ] - prices[ i - 1 ] );
+                }
+
+            }
+            return res;
+        }
+        int dp[] = new int[ 4 ];
+        for ( int i = 0; i < 4; i++ )
+        {
+            if ( i % 2 == 0 ) dp[ i ] = Integer.MIN_VALUE;
+        }
+        for ( int i = 0; i < prices.length; i++ )
+        {
+            for ( int j = 0; j < 4; j++ )
+            {
+                if ( j == 0 ) dp[ j ] = Math.max( dp[ j ], 0 - prices[ i ] );
+                else if ( j % 2 == 0 )
+                {
+                    dp[ j ] = Math.max( dp[ j ], dp[ j - 1 ] - prices[ i ] );
+                }
+                else
+                {
+                    dp[ j ] = Math.max( dp[ j ], dp[ j - 1 ] + prices[ i ] );
+                }
+            }
+        }
+        return dp[ 3 ];
+    }
 }

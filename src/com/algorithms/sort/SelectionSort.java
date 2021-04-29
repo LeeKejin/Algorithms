@@ -1,6 +1,6 @@
 package com.algorithms.sort;
 
-public class SelectionSort implements Sort
+public class SelectionSort
 {
     public static void main( String[] args )
     {
@@ -8,13 +8,13 @@ public class SelectionSort implements Sort
         long startTime = System.nanoTime();
         //        sort( ArrayGeneration.generateRandomArray( 10000, 10000 ) );
         //        sort( arr );
-        executeReverse( arr );
+        execute( arr );
         long endTime = System.nanoTime();
         double time = ( endTime - startTime ) / 1000000000.0;
         System.out.println( time );
     }
 
-    public < E extends Comparable< E > > void execute( E[] arr )
+    public static < E extends Comparable< E > > void execute( E[] arr )
     {
 
         for ( int i = 0; i < arr.length; i++ )
@@ -31,7 +31,6 @@ public class SelectionSort implements Sort
             E temp = arr[ i ];
             arr[ i ] = arr[ minIndex ];
             arr[ minIndex ] = temp;
-            minIndex = i;
 
         }
 

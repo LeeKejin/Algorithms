@@ -6,6 +6,7 @@ import java.util.List;
 public class Leet78
 {
     static List< List< Integer > > results = new ArrayList<>();
+    List< List< Integer > > res = new ArrayList<>();
 
     public static List< List< Integer > > subsets( int[] nums )
     {
@@ -27,9 +28,20 @@ public class Leet78
         }
     }
 
-    public static void main( String[] args )
+    public List< List< Integer > > subsets1( int[] nums )
     {
-        int[] arr = new int[] { 1, 2, 3 };
-        System.out.println( subsets( arr ) );
+        if ( nums.length == 0 ) return new ArrayList<>();
+        res.add( new ArrayList<>() );
+        for ( int i = 0; i < nums.length; i++ )
+        {
+            int size = res.size();
+            for ( int j = 0; j < size; j++ )
+            {
+                List< Integer > list = new ArrayList<>( res.get( j ) );
+                list.add( nums[ i ] );
+                res.add( list );
+            }
+        }
+        return res;
     }
 }

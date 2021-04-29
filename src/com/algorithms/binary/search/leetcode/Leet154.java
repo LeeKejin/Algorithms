@@ -2,28 +2,27 @@ package com.algorithms.binary.search.leetcode;
 
 public class Leet154
 {
-    public int findMin( int[] nums )
+    public int minArray( int[] numbers )
     {
-        if ( nums.length == 1 ) return nums[ 0 ];
-        return findMin( nums, 0, nums.length - 1 );
-    }
-
-    private int findMin( int[] nums, int l, int r )
-    {
-        if ( l > r )
+        if ( numbers.length == 1 ) return numbers[ 0 ];
+        int l = 0;
+        int r = numbers.length - 1;
+        while ( l < r )
         {
-            return nums[ 0 ];
+            int mid = l + ( r - l ) / 2;
+            if ( numbers[ mid ] > numbers[ r ] )
+            {
+                l = mid + 1;
+            }
+            else if ( numbers[ mid ] < numbers[ r ] )
+            {
+                r = mid;
+            }
+            else
+            {
+                r--;
+            }
         }
-        if ( l == r ) return nums[ l ];
-        int mid = l + ( r - l ) / 2;
-        if ( nums[ mid ] > nums[ r ] )
-        {
-            return findMin( nums, mid + 1, r );
-        }
-        else if ( nums[ mid ] < nums[ r ] )
-        {
-            return findMin( nums, l, mid );
-        }
-        return findMin( nums, l, r - 1 );
+        return numbers[ l ];
     }
 }

@@ -1,103 +1,93 @@
 package com.algorithms.binary.search.tree.leetcode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Test
 {
-    static class Node
+    class Node
     {
         public int val;
-        public List< Node > neighbors;
+        public Node left;
+        public Node right;
 
         public Node()
         {
-            val = 0;
-            neighbors = new ArrayList< Node >();
         }
 
         public Node( int _val )
         {
             val = _val;
-            neighbors = new ArrayList< Node >();
         }
 
-        public Node( int _val, ArrayList< Node > _neighbors )
+        public Node( int _val, Node _left, Node _right )
         {
             val = _val;
-            neighbors = _neighbors;
+            left = _left;
+            right = _right;
         }
     }
 
-    Map< Node, Node > visited = new HashMap<>();
-
-    public Node cloneGraph( Node node )
+    public class ListNode
     {
-        if ( node == null ) return null;
-        if ( node.neighbors.size() == 0 )
+        int val;
+        ListNode next;
+
+        ListNode()
         {
-            Node copiedNode = new Node( node.val );
-            return copiedNode;
         }
 
-        return dfs( node );
+        ListNode( int val )
+        {
+            this.val = val;
+        }
+
+        ListNode( int val, ListNode next )
+        {
+            this.val = val;
+            this.next = next;
+        }
     }
 
-    private Node dfs( Node node )
+    public TreeNode deserialize( String data )
     {
-        if ( visited.containsKey( node ) )
+        if ( data == "[]" ) return null;
+        String str = data.substring( 1, data.length() - 1 );
+        String[] arr = str.split( "," );
+        TreeNode root = new TreeNode( Integer.parseInt( arr[ 0 ] ) );
+
+        Queue< TreeNode > queue = new LinkedList<>();
+        queue.add( root );
+        int i = 1;
+        while ( i < arr.length )
         {
-            return visited.get( node );
+            TreeNode node = queue.poll();
+            if ( arr[ i ] != "null" )
+            {
+                node.left = new TreeNode( Integer.parseInt( arr[ i ] ) );
+                queue.add( node.left );
+            }
+            i++;
+            if ( i < arr.length && arr[ i ] != null )
+            {
+                node.right = new TreeNode( Integer.parseInt( arr[ i ] ) );
+                queue.add( node.right );
+            }
+            i++;
         }
-        Node clonedNode = new Node( node.val, new ArrayList<>() );
-        visited.put( node, clonedNode );
-        for ( Node neighbor : node.neighbors )
-        {
-            clonedNode.neighbors.add( dfs( neighbor ) );
-        }
-        return clonedNode;
+        return root;
     }
 
     public static void main( String[] args )
     {
         Test t = new Test();
-        Node n1 = new Node( 1 );
-        Node n2 = new Node( 2 );
-        Node n3 = new Node( 3 );
-        Node n4 = new Node( 4 );
-
-        List< Node > l1 = new ArrayList<>();
-        l1.add( n2 );
-        l1.add( n4 );
-        n1.neighbors.addAll( l1 );
-
-        List< Node > l2 = new ArrayList<>();
-        l2.add( n1 );
-        l2.add( n3 );
-        n2.neighbors.addAll( l2 );
-
-        List< Node > l3 = new ArrayList<>();
-        l3.add( n2 );
-        l3.add( n4 );
-        n3.neighbors.addAll( l3 );
-
-        List< Node > l4 = new ArrayList<>();
-        l4.add( n1 );
-        l4.add( n3 );
-        n4.neighbors.addAll( l4 );
-        Node n = t.cloneGraph( n1 );
-        System.out.println( n.val );
-
+        //        t.lengthOfLongestSubstring( "abcabcbb" );
         TreeNode root = new TreeNode( 1 );
-        root.right = new TreeNode( 2 );
-        root.right.left = new TreeNode( 3 );
-        //        root.left.left = new TreeNode( 6 );
-        //        root.left.right = new TreeNode( 2 );
-        //        root.right.left = new TreeNode( 4 );
-        //        root.right.right = new TreeNode( 5 );
-        //        root.right.left.left = new TreeNode( 6 );
+        root.left = new TreeNode( 2 );
+        root.right = new TreeNode( 3 );
+        //        root.left.left = new TreeNode( 5 );
+        //        root.left.right = new TreeNode( 1 );
+
         //        root.right.left.right = new TreeNode( 7 );
         //        root.left.right.left = new TreeNode( 7 );
         //        root.left.right.right = new TreeNode( 4 );

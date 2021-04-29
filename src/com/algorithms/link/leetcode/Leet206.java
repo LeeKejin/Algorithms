@@ -5,18 +5,17 @@ public class Leet206
     public ListNode reverseList( ListNode head )
     {
         if ( head == null ) return null;
-        ListNode prev = null;
         ListNode cur = head;
-        while ( cur.next != null )
+        ListNode prev = null;
+        while ( cur != null )
         {
-            ListNode next = cur.next;
+            ListNode temp = cur.next;
             cur.next = prev;
             prev = cur;
-            cur = next;
+            cur = temp;
 
         }
-        cur.next = prev;
-        return cur;
+        return prev;
     }
 
     public class ListNode

@@ -2,6 +2,16 @@ package com.algorithms.binary.search.tree.leetcode;
 
 public class Leet236_1
 {
+    public TreeNode lowestCommonAncestor1( TreeNode root, TreeNode p, TreeNode q )
+    {
+        if ( root == null || root == p || root == q ) return root;
+        TreeNode left = lowestCommonAncestor( root.left, p, q );
+        TreeNode right = lowestCommonAncestor( root.right, p, q );
+        if ( left == null ) return right;
+        if ( right == null ) return left;
+        return root;
+    }
+
     public static TreeNode lowestCommonAncestorSlowSolution( TreeNode root, TreeNode p, TreeNode q )
     {
         if ( root == null || root.val == p.val || root.val == q.val ) return root;

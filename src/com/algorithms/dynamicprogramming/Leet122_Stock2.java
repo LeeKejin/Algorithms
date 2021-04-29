@@ -23,6 +23,22 @@ public class Leet122_Stock2
         return dp[ prices.length - 1 ][ 0 ];
     }
 
+    public int maxProfitSimple( int[] prices )
+    {
+        if ( prices.length == 0 || prices.length == 1 ) return 0;
+
+        int res = 0;
+        for ( int i = 1; i < prices.length; i++ )
+        {
+            int val = prices[ i ] - prices[ i - 1 ];
+            if ( val > 0 )
+            {
+                res += val;
+            }
+        }
+        return res;
+    }
+
     public int maxProfitSolution1( int[] prices )
     {
         if ( prices.length == 0 || prices.length == 1 ) return 0;

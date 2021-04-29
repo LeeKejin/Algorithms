@@ -57,15 +57,15 @@ public class InsertionSort implements Sort
         SortingHelper.isSorted( arr );
     }
 
-    public < E extends Comparable< E > > void executeWithoutSwap2( E[] arr )
+    Integer[] insertSort1( Integer[] arr )
     {
-        for ( int i = 0; i < arr.length; i++ )
+        for ( int i = 1; i < arr.length; i++ )
         {
-            E temp = arr[ i ];
+            int temp = arr[ i ];
             int j;
-            for ( j = i; j - 1 >= 0; j-- )
+            for ( j = i; j >= 1; j-- )
             {
-                if ( arr[ j - 1 ].compareTo( temp ) > 0 )
+                if ( arr[ j - 1 ] > temp )
                 {
                     arr[ j ] = arr[ j - 1 ];
                 }
@@ -76,7 +76,7 @@ public class InsertionSort implements Sort
             }
             arr[ j ] = temp;
         }
-        SortingHelper.isSorted( arr );
+        return arr;
     }
 
     private < E extends Comparable< E > > void swap( E[] arr, int i, int j )
@@ -91,7 +91,7 @@ public class InsertionSort implements Sort
         Integer[] arr = new Integer[] { 6, 4, 2, 3, 5, 1 };
 
         InsertionSort sort = new InsertionSort();
-        sort.executeWithoutSwap2( arr );
+
         //        sort.executeWithoutSwapReverse( ArrayGeneration.generateRandomArray( 10000, 10000 ) );
     }
 }

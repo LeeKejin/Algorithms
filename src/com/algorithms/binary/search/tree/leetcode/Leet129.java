@@ -21,27 +21,25 @@ public class Leet129
         return l + r;
     }
 
-    static int result = 0;
+    int sum = 0;
 
-    public static int sumNumbersSolution1( TreeNode root )
+    public int sumNumbers1( TreeNode root )
     {
         if ( root == null ) return 0;
-        sumNumbers( root, 0 );
-        return result;
+        sumUp( root, 0 );
+        return sum;
     }
 
-    private static void sumNumbers( TreeNode node, int sum )
+    private void sumUp( TreeNode root, int cur )
     {
-        if ( node == null ) return;
-        if ( node.left == null && node.right == null )
+        if ( root == null ) return;
+        cur = cur * 10 + root.val;
+        if ( root.left == null && root.right == null )
         {
-            result += node.val;
-            result += sum;
-            return;
+            sum += cur;
         }
-        sumNumbers( node.left, 10 * ( node.val + sum ) );
-        sumNumbers( node.right, 10 * ( node.val + sum ) );
-
+        sumUp( root.left, cur );
+        sumUp( root.right, cur );
     }
 
     public static void main( String[] args )
