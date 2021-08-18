@@ -4,7 +4,7 @@ class Trie
 {
 
     /**
-     * Initialize your data structure here.
+     * Initialize your data structure here. Leet208
      */
     class TrieNode
     {

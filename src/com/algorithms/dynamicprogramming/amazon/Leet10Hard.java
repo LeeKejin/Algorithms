@@ -31,7 +31,8 @@ public class Leet10Hard
                     {
                         //* is the times of the appearance of the SAME character
                         //dp[ i - 1 ][ j ] ->match only previous character, ignore *, *=1
-                        //dp[ i - 2 ][ j ] ->ignore * and it previous character, *=0
+                        //dp[ i - 2 ][ j ] ->ignore * and it previous character, *=0, especially .* to delete . ----> s="asdf"  p=".*asdf.*"
+
                         //dp[ i ][ j - 1 ] -> *=more than one, match multiple characters
                         dp[ i ][ j ] = dp[ i - 1 ][ j ] || dp[ i - 2 ][ j ] || dp[ i ][ j - 1 ];
                     }

@@ -9,40 +9,38 @@ public class QuickSort
 {
     static Random random = new Random();
 
-    public Integer[] quickSortImplement( Integer[] arr, int l, int r )
+    int[] sort( int[] arr )
     {
-        if ( l >= r ) return arr;
-        int pivot = partition( arr, l, r );
-        swap( arr, l, pivot );
-        quickSortImplement( arr, l, pivot );
-        quickSortImplement( arr, pivot + 1, r );
+        quickSort( arr, 0, arr.length - 1 );
         return arr;
     }
 
-    public int partition( Integer[] arr, int start, int end )
+    private void quickSort( int[] arr, int l, int r )
     {
-        if ( start >= end ) return start;
+        if ( l > r ) return;
+        int pivot = partition( arr, l, r );
+        swap( arr, l, pivot );
+        quickSort( arr, l, pivot - 1 );
+        quickSort( arr, pivot + 1, r );
+    }
 
-        //        int pivot = arr[ start ];
-        //Random generate p
-        int p = start + random.nextInt( end - start );
-        swap( arr, start, p );
+    private int partition( int[] arr, int l, int r )
+    {
 
-        int pivot = arr[ start ];
-
-        int j = start + 1;
-        for ( int i = start + 1; i <= end; i++ )
+        int pivot = arr[ l ];
+        int j = l + 1;
+        for ( int i = l + 1; i <= r; i++ )
         {
             if ( arr[ i ] < pivot )
             {
-                swap( arr, j, i );
+                swap( arr, i, j );
                 j++;
             }
         }
         return j - 1;
     }
 
-    private void swap( Integer[] arr, int j, int i )
+    private void swap( int[] arr, int j, int i )
     {
         int temp = arr[ i ];
         arr[ i ] = arr[ j ];
@@ -56,8 +54,9 @@ public class QuickSort
         QuickSort quickSort = new QuickSort();
         //        Integer[] arr = ArrayGeneration.generateRandomArray( 10000, 1 );
         Integer[] arr = new Integer[] { 7, 6, 5, 4, 3, 2, 1 };
-        Integer[] res =
-            quickSort.quickSortImplement( ArrayGeneration.generateRandomArray( 10000, 10000 ), 0, 10000 - 1 );
+        QuickSort quickSort1 = new QuickSort();
+
+        int[] res = quickSort1.sort( ArrayGeneration.generateRandomArrayWithInt( 10000, 10000 ) );
 
         SortingHelper.isSorted( res );
         long endTime = System.nanoTime();

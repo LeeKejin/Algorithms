@@ -1,4 +1,4 @@
-package com.amazon.interview;
+package com.amazon.interview.greedy;
 
 public class Leet55
 {

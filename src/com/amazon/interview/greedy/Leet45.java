@@ -39,4 +39,22 @@ public class Leet45
         return res;
     }
 
+    public int jump2( int[] nums )
+    {
+
+        int max = 0;
+        int res = 0;
+        int end = 0;
+        for ( int i = 0; i < nums.length - 1; i++ )
+        {
+            max = Math.max( max, i + nums[ i ] );
+            if ( i == end )
+            {
+                res++;
+                end = max;
+                if ( end >= nums.length - 1 ) return res;
+            }
+        }
+        return res;
+    }
 }

@@ -1,6 +1,7 @@
 package com.algorithms.heap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MinHeap
@@ -147,6 +148,14 @@ public class MinHeap
         {
             siftDown( i );
         }
+    }
+
+    public static void main( String[] args )
+    {
+
+        MinHeap minHeap = new MinHeap();
+        minHeap.list.addAll( Arrays.asList( 9, 4, 7, 1, -2, 6, 5 ) );
+        minHeap.heapify();
     }
 }
 

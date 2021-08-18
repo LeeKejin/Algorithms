@@ -6,21 +6,17 @@ public class Offer27
 {
     public TreeNode mirrorTree( TreeNode root )
     {
-        if ( root == null ) return null;
-        return mirrorTree( root, new TreeNode( root.val ) );
+        dfs( root );
+        return root;
     }
 
-    private TreeNode mirrorTree( TreeNode original, TreeNode mirror )
+    private TreeNode dfs( TreeNode node )
     {
-        if ( original.left != null )
-        {
-            mirror.right = mirrorTree( original.left, new TreeNode( original.left.val ) );
-        }
+        if ( node == null ) return null;
+        TreeNode temp = node.left;
+        node.left = dfs( node.right );
+        node.right = dfs( temp );
+        return node;
 
-        if ( original.right != null )
-        {
-            mirror.left = mirrorTree( original.right, new TreeNode( original.right.val ) );
-        }
-        return mirror;
     }
 }

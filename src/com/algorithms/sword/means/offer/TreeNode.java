@@ -1,12 +1,17 @@
 package com.algorithms.sword.means.offer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TreeNode
 {
-    int val;
-    TreeNode left;
-    TreeNode right;
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
+    public TreeNode next;
+    public List< TreeNode > Children = new ArrayList<>();
 
-    TreeNode( int x )
+    public TreeNode( int x )
     {
         val = x;
     }

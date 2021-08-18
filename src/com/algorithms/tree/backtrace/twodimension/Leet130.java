@@ -1,5 +1,8 @@
 package com.algorithms.tree.backtrace.twodimension;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Leet130
 {
 
@@ -49,66 +52,72 @@ public class Leet130
         dfs( board, startX, startY + 1 );
     }
 
-    public static void solveSolution1( char[][] board )
+    public void solve1( char[][] board )
     {
-        int columnNum = board[ 0 ].length - 1;
-        int rowNum = board.length - 1;
-
-        for ( int i = 0; i < board[ 0 ].length; i++ )
+        int m = board.length;
+        int n = board[ 0 ].length;
+        Set< int[] > oPoints = new HashSet<>();
+        boolean visited[][] = new boolean[ m ][ n ];
+        for ( int j = 0; j < n; j++ )
         {
-            if ( board[ 0 ][ i ] == 'O' ) dfsSolution( board, 0, i );
-            if ( board[ rowNum ][ i ] == 'O' ) dfsSolution( board, rowNum, i );
-        }
-
-        for ( int i = 0; i < board.length; i++ )
-        {
-            if ( board[ i ][ 0 ] == 'O' ) dfsSolution( board, i, 0 );
-            if ( board[ i ][ columnNum ] == 'O' ) dfsSolution( board, i, columnNum );
-        }
-
-        for ( int i = 0; i < board.length; i++ )
-        {
-            for ( int j = 0; j < board[ 0 ].length; j++ )
+            if ( board[ 0 ][ j ] == 'O' )
             {
-                if ( board[ i ][ j ] == 'O' )
+                oPoints.add( new int[] { 0, j } );
+            }
+            if ( board[ m - 1 ][ j ] == 'O' )
+            {
+                oPoints.add( new int[] { m - 1, j } );
+            }
+        }
+
+        for ( int i = 0; i < m; i++ )
+        {
+            if ( board[ i ][ 0 ] == 'O' )
+            {
+                oPoints.add( new int[] { i, 0 } );
+            }
+            if ( board[ i ][ n - 1 ] == 'O' )
+            {
+                oPoints.add( new int[] { i, n - 1 } );
+            }
+        }
+        for ( int[] point : oPoints )
+        {
+            int x = point[ 0 ];
+            int y = point[ 1 ];
+            dfs( x, y, visited, board );
+        }
+        for ( int i = 0; i < m; i++ )
+        {
+            for ( int j = 0; j < n; j++ )
+            {
+                if ( !visited[ i ][ j ] )
                 {
                     board[ i ][ j ] = 'X';
                 }
-                if ( board[ i ][ j ] == '#' )
-                {
-                    board[ i ][ j ] = 'O';
-                }
             }
         }
     }
 
-    private static void dfsSolution( char[][] board, int row, int column )
+    private void dfs( int x, int y, boolean visited[][], char[][] board )
     {
-        if ( row < 0 || row >= board.length || column < 0 || column >= board[ 0 ].length
-            || board[ row ][ column ] != 'O' ) return;
-        board[ row ][ column ] = '#';
-        dfsSolution( board, row + 1, column );
-        dfsSolution( board, row, column + 1 );
-        dfsSolution( board, row - 1, column );
-        dfsSolution( board, row, column - 1 );
-
-    }
-
-    public static void main( String[] args )
-    {
-        char[][] board = new char[][]
-            { { 'X', 'X', 'O', 'X' },
-                { 'X', 'O', 'O', 'X' },
-                { 'X', 'X', 'O', 'X' },
-                { 'X', 'O', 'X', 'X' } };
-        solve( board );
-        for ( int i = 0; i < board.length; i++ )
+        if ( isInArea( x, y, visited.length, visited[ 0 ].length ) && !visited[ x ][ y ] && board[ x ][ y ] == 'O' )
         {
-            for ( int j = 0; j < board[ 0 ].length; j++ )
+            visited[ x ][ y ] = true;
+            int[][] direction = new int[][] { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+
+            for ( int[] dir : direction )
             {
-                System.out.print( board[ i ][ j ] );
+                int newX = x + dir[ 0 ];
+                int newY = y + dir[ 1 ];
+                dfs( newX, newY, visited, board );
             }
-            System.out.println();
         }
     }
+
+    boolean isInArea( int x, int y, int m, int n )
+    {
+        return x >= 0 && x < m && y >= 0 && y < n;
+    }
+
 }

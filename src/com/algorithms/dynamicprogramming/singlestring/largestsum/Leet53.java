@@ -1,22 +1,18 @@
 package com.algorithms.dynamicprogramming.singlestring.largestsum;
 
-import java.util.Arrays;
-
 public class Leet53
 {
     public int maxSubArray( int[] nums )
     {
         if ( nums.length == 0 ) return 0;
-        if ( nums.length == 1 ) return nums[ 0 ];
-        int[] dp = Arrays.copyOf( nums, nums.length );
-        int max = dp[ 0 ];
-
+        int max = nums[ 0 ];
+        int result = nums[ 0 ];
         for ( int i = 1; i < nums.length; i++ )
         {
-            dp[ i ] = Math.max( nums[ i ], dp[ i - 1 ] + nums[ i ] );
-            max = Math.max( max, dp[ i ] );
+            max = Math.max( max + nums[ i ], nums[ i ] );
+            result = Math.max( result, max );
         }
-        return max;
+        return result;
     }
 
     public int maxSubArrayWithBinarySearch( int[] nums )

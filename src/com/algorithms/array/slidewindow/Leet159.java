@@ -5,35 +5,27 @@ import java.util.Map;
 
 public class Leet159
 {
-    public int lengthOfLongestSubstringTwoDistinct( String s )
+    public static int findLength( String str, int k )
     {
-        if ( s.length() < 2 ) return 1;
+        int start = 0;
+        int res = 0;
         Map< Character, Integer > map = new HashMap<>();
-        int valid = 0;
-        int right = 0;
-        int left = 0;
-        int len = 0;
-        while ( right < s.length() )
+        for ( int i = 0; i < str.length(); i++ )
         {
-            char ch = s.charAt( right );
-            if ( !map.containsKey( ch ) || map.get( ch ) == 0 ) valid++;
+            char ch = str.charAt( i );
             map.put( ch, map.getOrDefault( ch, 0 ) + 1 );
-            right++;
-            if ( valid == 2 )
+            while ( map.size() > k )
             {
-                len = Math.max( len, right - left );
-            }
-            while ( valid > 2 )
-            {
-                char c = s.charAt( left );
-                map.put( c, map.get( c ) - 1 );
-                if ( map.get( c ) == 0 )
+                char startCh = str.charAt( start );
+                map.put( startCh, map.get( startCh ) - 1 );
+                if ( map.get( startCh ) == 0 )
                 {
-                    valid--;
+                    map.remove( startCh );
                 }
-                left++;
+                start++;
             }
+            res = Math.max( res, i - start + 1 );
         }
-        return len == 0 ? s.length() : len;
+        return res;
     }
 }

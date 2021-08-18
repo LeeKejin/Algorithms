@@ -1,5 +1,7 @@
 package com.amazon.interview;
 
+import java.util.PriorityQueue;
+
 public class Leet23
 {
     public static class ListNode
@@ -40,5 +42,35 @@ public class Leet23
         }
         l2.next = mergeTwoList( l1, l2.next );
         return l2;
+    }
+
+    public ListNode mergeKListsHeap( ListNode[] lists )
+    {
+        if ( lists.length == 0 ) return null;
+        if ( lists.length < 2 ) return lists[ 0 ];
+        PriorityQueue< ListNode > queue = new PriorityQueue<>( ( n1, n2 ) -> ( n1.val - n2.val ) );
+        for ( ListNode list : lists )
+        {
+            if ( list != null ) queue.add( list );
+        }
+        ListNode head = null;
+        ListNode last = null;
+        while ( !queue.isEmpty() )
+        {
+            ListNode node = queue.poll();
+            if ( head == null )
+            {
+                head = node;
+                last = node;
+            }
+            else
+            {
+                last.next = node;
+                last = last.next;
+            }
+
+            if ( node.next != null ) queue.add( node.next );
+        }
+        return head;
     }
 }

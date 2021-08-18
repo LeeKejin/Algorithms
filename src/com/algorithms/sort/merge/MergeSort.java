@@ -44,16 +44,12 @@ public class MergeSort
                 i++;
             }
         }
-        for ( int m = l; m <= r; m++ )
-        {
-            System.out.print( arr[ m ] );
-        }
-        System.out.println();
+
     }
 
     public static void main( String[] args )
     {
-        int[] arr = new int[] { 3, 2, 3, 1, 2, 4, 5, 5, 6 };
+        int[] arr = new int[] { 3, 2, 4 };
         //        int[] arr = ArrayGeneration.generateRandomArrayWithInt( 10000, 10000 );
         MergeSort mergeSort = new MergeSort();
         mergeSort.mergeSortImplement( arr, 0, arr.length - 1 );

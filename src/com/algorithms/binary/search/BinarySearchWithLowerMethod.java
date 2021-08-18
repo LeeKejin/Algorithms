@@ -1,5 +1,7 @@
 package com.algorithms.binary.search;
 
+import java.util.List;
+
 public class BinarySearchWithLowerMethod
 {
     public int binarySearch( int[] arr, int target )
@@ -27,6 +29,57 @@ public class BinarySearchWithLowerMethod
     {
         int arr[] = new int[] { 1, 1, 3, 3, 5, 5, 5, 7, 7 };
         BinarySearchWithLowerMethod lower = new BinarySearchWithLowerMethod();
-        System.out.println( lower.binarySearch( arr, 4 ) );
+        System.out.println( lower.binarySearch( arr, 5 ) );
+    }
+
+    //l=mid+1->mid = l + ( r - l ) / 2;   IF l=mid  ->mid=l + ( r - l + 1 ) / 2;
+    //l每次加->mid = l + ( r - l ) / 2; 如果l=mid 但是r=mid+1->mid=l + ( r - l + 1 ) / 2;
+    static int findLowIndex( List< Integer > arr, int key )
+    {
+        int l = 0;
+        int r = arr.size() - 1;
+        while ( l < r )
+        {
+            int mid = l + ( r - l ) / 2;
+            if ( arr.get( mid ) == key )
+            {
+                r = mid;
+            }
+            else if ( arr.get( mid ) > key )
+            {
+                r = mid - 1;
+            }
+            else
+            {
+                l = mid + 1;
+            }
+        }
+
+        return arr.get( l ) == key ? l : -1;
+
+    }
+
+    static int findHighIndex( List< Integer > arr, int key )
+    {
+        int l = 0;
+        int r = arr.size() - 1;
+        while ( l < r )
+        {
+            int mid = l + ( r - l + 1 ) / 2;
+            if ( arr.get( mid ) == key )
+            {
+                l = mid;
+            }
+            else if ( arr.get( mid ) > key )
+            {
+                r = mid - 1;
+            }
+            else
+            {
+                l = mid + 1;
+            }
+        }
+        return arr.get( l ) == key ? l : -1;
+
     }
 }
