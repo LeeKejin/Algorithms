@@ -1,6 +1,6 @@
 package com.educative.graph;
 
-public class Stack<V> {//Play with Git
+public class Stack<V> {
     private int maxSize;
     private int top;
     private V[] array;

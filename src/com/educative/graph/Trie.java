@@ -1,6 +1,6 @@
 package com.educative.graph;
 
-class Trie {//Play with Git
+class Trie {
     private TrieNode root; //Root Node
 
     //Constructor
