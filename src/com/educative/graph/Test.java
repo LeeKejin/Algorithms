@@ -21,7 +21,7 @@ public class Test {
         System.out.println(bfs(g2));
         System.out.println("123");
         System.out.println("426");
-        System.out.println("888");
+        System.out.println("999");
     }
 
     public static String bfs(Graph g) {
