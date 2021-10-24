@@ -19,7 +19,14 @@ public class Test {
         g2.printGraph();
 
         System.out.println(bfs(g2));
-        
+        System.out.println("123");
+
+        String str = "Test";
+        System.out.println(str);
+        System.out.println("12345");
+
+
+
         System.out.println("9999999123");
 
     }
