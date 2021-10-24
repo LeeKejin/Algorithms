@@ -11,8 +11,9 @@ public class Test {
         Graph g2 = new Graph(5);
         g2.addEdge(0, 1);
         g2.addEdge(0, 4);
-        g2.addEdge(1, 2);
         g2.addEdge(3, 4);
+        g2.addEdge(2, 2);
+        g2.addEdge(2, 4);
         g2.printGraph();
 
         System.out.println(bfs(g2));
