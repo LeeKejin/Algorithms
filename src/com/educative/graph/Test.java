@@ -16,6 +16,7 @@ public class Test {
         g2.printGraph();
 
         System.out.println(bfs(g2));
+        System.out.println("");
     }
 
     public static String bfs(Graph g) {
