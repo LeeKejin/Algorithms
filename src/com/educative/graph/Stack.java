@@ -1,7 +1,6 @@
 package com.educative.graph;
 
-public class Stack< V >
-{
+public class Stack<V> {//Play with Git
     private int maxSize;
     private int top;
     private V[] array;
@@ -13,65 +12,56 @@ public class Stack< V >
     This type-casting is unsafe and produces a warning.
     Un-comment the line below and execute again to see the warning.
     */
-    @SuppressWarnings( "unchecked" )
-    public Stack( int maxSize )
-    {
+    @SuppressWarnings("unchecked")
+    public Stack(int maxSize) {
         this.maxSize = maxSize;
         this.top = -1; //initially when stack is empty
-        array = ( V[] ) new Object[ maxSize ];//type casting Object[] to V[]
+        array = (V[]) new Object[maxSize];//type casting Object[] to V[]
         this.currentSize = 0;
     }
 
-    public int getCurrentSize()
-    {
+    public int getCurrentSize() {
         return currentSize;
     }
 
     //returns the maximum size capacity
-    public int getMaxSize()
-    {
+    public int getMaxSize() {
         return maxSize;
     }
 
     //returns true if Stack is empty
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return top == -1;
     }
 
     //returns true if Stack is full
-    public boolean isFull()
-    {
+    public boolean isFull() {
         return top == maxSize - 1;
     }
 
     //returns the value at top of Stack
-    public V top()
-    {
-        if ( isEmpty() )
+    public V top() {
+        if (isEmpty())
             return null;
-        return array[ top ];
+        return array[top];
     }
 
     //inserts a value to the top of Stack
-    public void push( V value )
-    {
-        if ( isFull() )
-        {
-            System.err.println( "Stack is Full!" );
+    public void push(V value) {
+        if (isFull()) {
+            System.err.println("Stack is Full!");
             return;
         }
-        array[ ++top ] = value; //increments the top and adds value to updated top
+        array[++top] = value; //increments the top and adds value to updated top
         currentSize++;
     }
 
     //removes a value from top of Stack and returns
-    public V pop()
-    {
-        if ( isEmpty() )
+    public V pop() {
+        if (isEmpty())
             return null;
         currentSize--;
-        return array[ top-- ]; //returns value and top and decrements the top
+        return array[top--]; //returns value and top and decrements the top
     }
 
 }
