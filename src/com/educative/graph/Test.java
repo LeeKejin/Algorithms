@@ -10,13 +10,13 @@ public class Test {
 //        Graph graph = new Graph(5);
         Graph g2 = new Graph(5);
         g2.addEdge(0, 1);
-        g2.addEdge(0, 4);
-        g2.addEdge(1, 2);
-       
+        g2.addEdge(2, 4);
+        g2.addEdge(3, 5);
+
         g2.printGraph();
 
         System.out.println(bfs(g2));
-        System.out.println("");
+        System.out.println("456");
     }
 
     public static String bfs(Graph g) {
