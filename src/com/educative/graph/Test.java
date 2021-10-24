@@ -9,15 +9,14 @@ public class Test {
     public static void main(String[] args) {
 //        Graph graph = new Graph(5);
         Graph g2 = new Graph(5);
-        g2.addEdge(0, 1);
         g2.addEdge(2, 4);
-        g2.addEdge(4, 5);
+        g2.addEdge(4, 6);
 
         g2.printGraph();
 
         System.out.println(bfs(g2));
         System.out.println("426");
-        System.out.println("888");
+        System.out.println("999");
     }
 
     public static String bfs(Graph g) {
