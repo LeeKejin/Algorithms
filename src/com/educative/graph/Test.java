@@ -19,9 +19,11 @@ public class Test {
         g2.printGraph();
 
         System.out.println(bfs(g2));
-        System.out.println("123");
-        System.out.println("426");
-        System.out.println("999");
+        System.out.println("12345");
+        System.out.println("426888");
+        System.out.println("9999999");
+        String s = "s1";
+        System.out.println(s);
     }
 
     public static String bfs(Graph g) {
