@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-import javafx.util.Pair;
 
 public class Leet104
 {
@@ -37,32 +36,32 @@ public class Leet104
         return depth;
     }
 
-    public static int maxDepthSolutionWithDFS( TreeNode root )
-    {
-        if ( root == null ) return 0;
-
-        int maxDepth = 0;
-        Pair< TreeNode, Integer > rootPair = new Pair<>( root, 1 );
-
-        Stack< Pair< TreeNode, Integer > > stack = new Stack<>();
-        stack.push( rootPair );
-        while ( !stack.isEmpty() )
-        {
-            Pair< TreeNode, Integer > pair = stack.pop();
-            TreeNode node = pair.getKey();
-            maxDepth = Math.max( pair.getValue(), maxDepth );
-            int currentDepth = pair.getValue();
-            if ( node.left != null )
-            {
-                stack.push( new Pair<>( node.left, currentDepth + 1 ) );
-            }
-            if ( node.right != null )
-            {
-                stack.push( new Pair<>( node.right, currentDepth + 1 ) );
-            }
-        }
-        return maxDepth;
-    }
+//    public static int maxDepthSolutionWithDFS( TreeNode root )
+//    {
+//        if ( root == null ) return 0;
+//
+//        int maxDepth = 0;
+//        Pair< TreeNode, Integer > rootPair = new Pair<>( root, 1 );
+//
+//        Stack< Pair< TreeNode, Integer > > stack = new Stack<>();
+//        stack.push( rootPair );
+//        while ( !stack.isEmpty() )
+//        {
+//            Pair< TreeNode, Integer > pair = stack.pop();
+//            TreeNode node = pair.getKey();
+//            maxDepth = Math.max( pair.getValue(), maxDepth );
+//            int currentDepth = pair.getValue();
+//            if ( node.left != null )
+//            {
+//                stack.push( new Pair<>( node.left, currentDepth + 1 ) );
+//            }
+//            if ( node.right != null )
+//            {
+//                stack.push( new Pair<>( node.right, currentDepth + 1 ) );
+//            }
+//        }
+//        return maxDepth;
+//    }
 
     public static void main( String[] args )
     {

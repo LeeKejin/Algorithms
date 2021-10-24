@@ -1,11 +1,9 @@
 package com.educative.graph;
 
-public class DoublyLinkedList< T >
-{
+public class DoublyLinkedList<T> {
 
     //Node inner class for DLL
-    public class Node
-    {
+    public class Node {
         public T data;
         public Node nextNode;
         public Node prevNode;
@@ -15,126 +13,67 @@ public class DoublyLinkedList< T >
     public Node tailNode;
     public int size;
 
-    public DoublyLinkedList()
-    {
+    public DoublyLinkedList() {
         this.headNode = null;
         this.tailNode = null;
     }
 
-    public boolean isEmpty()
-    {
-        if ( headNode == null && tailNode == null )
-            return true;
-        return false;
+    public boolean isEmpty() {
+        return headNode == null && tailNode == null;
     }
 
-    public Node getHeadNode()
-    {
+    public Node getHeadNode() {
         return headNode;
     }
 
-    public Node getTailNode()
-    {
+    public Node getTailNode() {
         return tailNode;
     }
 
-    public int getSize()
-    {
+    public int getSize() {
         return size;
     }
 
-    public void insertAtHead( T data )
-    {
-        Node newNode = new Node();
-        newNode.data = data;
-        newNode.nextNode = this.headNode; //Linking newNode to head's nextNode
-        newNode.prevNode = null;
-        if ( headNode != null )
-            headNode.prevNode = newNode;
-        else
-            tailNode = newNode;
-        this.headNode = newNode;
+    public void insertAtHead(T data) {
+        Node node = new Node();
+        node.data = data;
+        node.nextNode = headNode;
+        if (headNode != null) {
+            headNode.prevNode = node;
+        } else {
+            tailNode = node;
+        }
+        headNode = node;
         size++;
     }
 
-    public void insertAtEnd( T data )
-    {
-        if ( isEmpty() )
-        {
-            insertAtHead( data );
-            return;
+    public void insertAtEnd(T data) {
+        Node node = new Node();
+        node.data = data;
+        if (tailNode != null) {
+            tailNode.nextNode = node;
+            node.prevNode = tailNode;
+        } else {
+            tailNode = node;
+            headNode = node;
         }
-        Node newNode = new Node();
-        newNode.data = data;
-        newNode.nextNode = null;
-        newNode.prevNode = tailNode;
-        tailNode.nextNode = newNode;
-        tailNode = newNode;
         size++;
     }
 
-    public void printList()
-    {
-        if ( isEmpty() )
-        {
-            System.out.println( "List is Empty!" );
-            return;
-        }
+    public void printList() {
 
-        Node temp = headNode;
-        System.out.print( "List : null <- " );
-
-        while ( temp.nextNode != null )
-        {
-            System.out.print( temp.data.toString() + " <-> " );
-            temp = temp.nextNode;
-        }
-
-        System.out.println( temp.data.toString() + " -> null" );
     }
 
-    public void printListReverse()
-    {
-        if ( isEmpty() )
-        {
-            System.out.println( "List is Empty!" );
-        }
+    public void printListReverse() {
 
-        Node temp = tailNode;
-        System.out.print( "List : null <- " );
-
-        while ( temp.prevNode != null )
-        {
-            System.out.print( temp.data.toString() + " <-> " );
-            temp = temp.prevNode;
-        }
-
-        System.out.println( temp.data.toString() + " -> null" );
     }
 
-    public void deleteAtHead()
-    {
-        if ( isEmpty() )
-            return;
+    public void deleteAtHead() {
 
-        headNode = headNode.nextNode;
-        if ( headNode == null )
-            tailNode = null;
-        else
-            headNode.prevNode = null;
-        size--;
     }
 
-    public void deleteAtTail()
-    {
-        if ( isEmpty() )
-            return;
-        tailNode = tailNode.prevNode;
-        if ( tailNode == null )
-            headNode = null;
-        else
-            tailNode.nextNode = null;
-        size--;
+    public void deleteAtTail() {
+
     }
 
 }
