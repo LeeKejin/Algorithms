@@ -11,12 +11,13 @@ public class Test {
         Graph g2 = new Graph(5);
         g2.addEdge(0, 1);
         g2.addEdge(2, 4);
-        g2.addEdge(3, 5);
+        g2.addEdge(4, 5);
 
         g2.printGraph();
 
         System.out.println(bfs(g2));
-        System.out.println("456");
+        System.out.println("426");
+        System.out.println("888");
     }
 
     public static String bfs(Graph g) {
