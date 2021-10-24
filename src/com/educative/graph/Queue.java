@@ -1,7 +1,7 @@
 package com.educative.graph;
 
-public class Queue< V >
-{
+public class Queue<V> {
+    //check git
     private int maxSize;
     private V[] array;
     private int front;
@@ -14,52 +14,45 @@ public class Queue< V >
     This type-casting is unsafe and produces a warning.
     Un-comment the line below and execute again to see the warning.
     */
-    @SuppressWarnings( "unchecked" )
-    public Queue( int maxSize )
-    {
+    @SuppressWarnings("unchecked")
+    public Queue(int maxSize) {
         this.maxSize = maxSize;
-        array = ( V[] ) new Object[ maxSize ];
+        array = (V[]) new Object[maxSize];
         front = 0;
         back = -1;
         currentSize = 0;
     }
 
-    public int getMaxSize()
-    {
+    public int getMaxSize() {
         return maxSize;
     }
 
-    public int getCurrentSize()
-    {
+    public int getCurrentSize() {
         return currentSize;
     }
 
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return currentSize == 0;
     }
 
-    public boolean isFull()
-    {
+    public boolean isFull() {
         return currentSize == maxSize - 1;
     }
 
-    public void enqueue( V value )
-    {
-        if ( isFull() )
+    public void enqueue(V value) {
+        if (isFull())
             return;
-        back = ( back + 1 ) % maxSize; //to keep the index in range
-        array[ back ] = value;
+        back = (back + 1) % maxSize; //to keep the index in range
+        array[back] = value;
         currentSize++;
     }
 
-    public V dequeue()
-    {
-        if ( isEmpty() )
+    public V dequeue() {
+        if (isEmpty())
             return null;
 
-        V temp = array[ front ];
-        front = ( front + 1 ) % maxSize; //to keep the index in range
+        V temp = array[front];
+        front = (front + 1) % maxSize; //to keep the index in range
         currentSize--;
 
         return temp;
