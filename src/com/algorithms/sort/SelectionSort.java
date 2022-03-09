@@ -1,64 +1,44 @@
 package com.algorithms.sort;
 
-public class SelectionSort
-{
-    public static void main( String[] args )
-    {
-        Integer[] arr = new Integer[] { 6, 4, 2, 3, 5, 1 };
-        long startTime = System.nanoTime();
-        //        sort( ArrayGeneration.generateRandomArray( 10000, 10000 ) );
-        //        sort( arr );
-        execute( arr );
-        long endTime = System.nanoTime();
-        double time = ( endTime - startTime ) / 1000000000.0;
-        System.out.println( time );
-    }
+public class SelectionSort {
 
-    public static < E extends Comparable< E > > void execute( E[] arr )
-    {
-
-        for ( int i = 0; i < arr.length; i++ )
-        {
-            int minIndex = i;
-
-            for ( int j = i; j < arr.length; j++ )
-            {
-                if ( arr[ j ].compareTo( arr[ minIndex ] ) <= 0 )
-                {
-                    minIndex = j;
+    public void selectionSort(int nums[]) {
+        for (int i = 0; i < nums.length; i++) {
+            int index = i; //index must euqal to i
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[j] < nums[index]) {
+                    index = j;
                 }
             }
-            E temp = arr[ i ];
-            arr[ i ] = arr[ minIndex ];
-            arr[ minIndex ] = temp;
 
+            if (index != i) swap(nums, i, index);
         }
-
-        System.out.println( "Sorted: " + SortingHelper.isSorted( arr ) );
     }
 
-    public static < E extends Comparable< E > > void executeReverse( E[] arr )
-    {
+    private void swap(int[] arr, int j, int i) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
 
-        for ( int i = arr.length - 1; i >= 0; i-- )
-        {
+    public static <E extends Comparable<E>> void executeReverse(E[] arr) {
+
+        for (int i = arr.length - 1; i >= 0; i--) {
             int minIndex = i;
 
-            for ( int j = i; j >= 0; j-- )
-            {
-                if ( arr[ j ].compareTo( arr[ minIndex ] ) > 0 )
-                {
+            for (int j = i; j >= 0; j--) {
+                if (arr[j].compareTo(arr[minIndex]) > 0) {
                     minIndex = j;
                 }
             }
-            E temp = arr[ i ];
-            arr[ i ] = arr[ minIndex ];
-            arr[ minIndex ] = temp;
+            E temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
             minIndex = i;
 
         }
 
-        System.out.println( "Sorted: " + SortingHelper.isSorted( arr ) );
+        System.out.println("Sorted: " + SortingHelper.isSorted(arr));
     }
 
 }

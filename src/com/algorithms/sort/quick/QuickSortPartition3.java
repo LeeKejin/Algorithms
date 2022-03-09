@@ -1,70 +1,49 @@
 package com.algorithms.sort.quick;
 
-import java.util.Random;
-
+import com.algorithms.sort.ArrayGeneration;
 import com.algorithms.sort.SortingHelper;
 
-public class QuickSortPartition3
-{
+import java.util.Random;
+
+//https://leetcode.com/problems/sort-an-array/ ->leet912
+//一般情况时排序速度最块，但是不稳定，当有序时，反而不好；
+public class QuickSortPartition3 {
     static Random random = new Random();
 
-    //    public Integer[] quickSortImplement( Integer[] arr, int l, int r )
-    //    {
-    //        if ( l >= r ) return arr;
-    //        int pivot = partition( arr, l, r );
-    //        swap( arr, l, pivot );
-    //        quickSortImplement( arr, l, pivot );
-    //        quickSortImplement( arr, pivot + 1, r );
-    //        return arr;
-    //    }
-
-    public void quickSortImplement( Integer[] arr, int start, int end )
-    {
-        if ( start >= end ) return;
-        int l = start;
-        int r = end;
-        int p = start + random.nextInt( end - start );
-        swap( arr, start, p );
-        int pivot = arr[ start ];
-        start++;
-        end--;
+    public void quickSort(int[] nums, int left, int right) {
+        if (left >= right) return;
+        int p = nums[left];
+        int start = left + 1;
+        int end = right;
         int i = start;
-        while ( i <= end )
-        {
-            if ( pivot == arr[ i ] )
-            {
+        while (i <= end) {
+            if (nums[i] == p) {
                 i++;
-            }
-            else if ( pivot > arr[ i ] )
-            {
-                swap( arr, start, i );
+            } else if (nums[i] < p) {
+                swap(nums, i, start);
+                i++;
                 start++;
-                i++;
-            }
-            else
-            {
-                swap( arr, end, i );
+            } else {
+                swap(nums, i, end);
                 end--;
             }
         }
-        swap( arr, l, start - 1 );
-        quickSortImplement( arr, l, start - 1 );
-        quickSortImplement( arr, end + 1, r );
+        swap(nums, left, start - 1);
+        quickSort(nums, left, start - 2);
+        quickSort(nums, end + 1, right);
     }
 
-    private void swap( Integer[] arr, int j, int i )
-    {
-        int temp = arr[ i ];
-        arr[ i ] = arr[ j ];
-        arr[ j ] = temp;
+    private void swap(int[] arr, int j, int i) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 
-    public static void main( String[] args )
-    {
-        //        Integer[] arr = ArrayGeneration.generateRandomArray( 10000, 10000 );
-        Integer[] arr = new Integer[] { 7, 6, 5, 4, 3, 2, 1 };
+
+    public static void main(String[] args) {
+        int[] arr = ArrayGeneration.generateRandomArray(1000, 1000);
+//        int[] arr = new int[]{7, 6, 5, 4, 3, 2, 1};
         QuickSortPartition3 partition3 = new QuickSortPartition3();
-        partition3.quickSortImplement( arr, 0, 7 );
-        SortingHelper.isSorted( arr );
+        SortingHelper.isSorted(arr);
     }
 }

@@ -1,0 +1,2 @@
+前序遍历delete by layer
+后序遍历 used for leetcode 1325!!!

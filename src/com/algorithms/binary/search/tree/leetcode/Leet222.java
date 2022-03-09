@@ -1,98 +1,48 @@
 package com.algorithms.binary.search.tree.leetcode;
 
-public class Leet222
-{
-    public static int countNodes( TreeNode root )
-    {
-        if ( root == null ) return 0;
-        return countNodes( root.left ) + countNodes( root.right ) + 1;
+public class Leet222 {
+    int getDepth(TreeNode root) {
+        int d = 0;
+        if (root == null) return 0;
+        while (root != null) {
+            root = root.left;
+            d++;
+        }
+        return d - 1;
     }
 
-    public static int countNodesSolution1( TreeNode root )
-    {
-        if ( root == null ) return 0;
-        int left = countLevel( root.left );
-        int right = countLevel( root.right );
-
-        if ( left == right )
-        {
-            int v = ( int ) Math.pow( 2, left );
-            int val = ( int ) ( v + countNodesSolution1( root.right ) );
-            return val;
-        }
-        else
-        {
-            int v = ( int ) Math.pow( 2, right );
-            int val = ( int ) ( v + countNodesSolution1( root.left ) );
-            return val;
-        }
-    }
-
-    private static int countLevel( TreeNode node )
-    {
-        int count = 0;
-        while ( node != null )
-        {
-            count++;
-            node = node.left;
-        }
-        return count;
-    }
-
-    static int result = 0;
-
-    public int countNodesNormalSolution( TreeNode root )
-    {
-        if ( root == null ) return 0;
-        count( root );
-        return result;
-    }
-
-    public static void count( TreeNode node )
-    {
-        if ( node.left == null && node.right == null )
-        {
-            result++;
-            return;
-        }
-        if ( node.left != null && node.right != null )
-        {
-            result++;
-        }
-        if ( node.left != null )
-        {
-
-            if ( node.right == null && node.left.left == null && node.left.right == null )
-            {
-                result++;
+    //小于x的最大值
+    public int countNodes(TreeNode root) {
+        if (root == null) return 0;
+        int d = getDepth(root);
+        int l = 0;
+        int r = (int) Math.pow(2, d) - 1;
+        while (l < r) {
+            int mid = l + (r - l + 1) / 2;
+            if (exists(root, mid, d)) {
+                l = mid;
+            } else {
+                r = mid - 1;
             }
-
-            count( node.left );
-
         }
 
-        if ( node.right != null )
-        {
-
-            if ( node.left == null && node.right.left == null && node.right.right == null )
-            {
-                result++;
-
-            }
-
-            count( node.right );
-        }
+        return (int) Math.pow(2, d) + l;
     }
 
-    public static void main( String[] args )
-    {
-        TreeNode root = new TreeNode( 1 );
-        root.left = new TreeNode( 2 );
-        root.right = new TreeNode( 3 );
-        root.left.left = new TreeNode( 4 );
-        root.left.right = new TreeNode( 5 );
-
-        root.right.left = new TreeNode( 6 );
-        System.out.println( countNodesSolution1( root ) );
+    //大于x的最小值
+    private boolean exists(TreeNode root, int target, int d) {
+        int l = 0;
+        int r = (int) Math.pow(2, d) - 1;
+        for (int i = 0; i < d; i++) {
+            int mid = l + (r - l) / 2;
+            if (target <= mid) {
+                root = root.left;
+                r = mid;
+            } else {
+                root = root.right;
+                l = mid + 1;
+            }
+        }
+        return root != null;
     }
 }

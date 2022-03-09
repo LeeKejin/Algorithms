@@ -4,60 +4,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Leet40
-{
-    static List< List< Integer > > results = new ArrayList<>();
+public class Leet40 {
+    List<List<Integer>> res = new ArrayList<>();
 
-    public static List< List< Integer > > combinationSum2( int[] candidates, int target )
-    {
-        if ( candidates.length <= 0 ) return new ArrayList<>();
-        Arrays.sort( candidates );
-        back( candidates, target, 0, new ArrayList< Integer >() );
-        return results;
-
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        dfs(candidates, 0, new ArrayList<>(), target, 0);
+        return res;
     }
 
-    private static void back( int[] candidates, int target, int start, ArrayList< Integer > list )
-    {
-        if ( target == 0 )
-        {
-            results.add( new ArrayList<>( list ) );
-            return;
+    private void dfs(int[] candidates, int i, List<Integer> lists, int target, int sum) {
+        if (sum > target) return;
+        if (sum == target) {
+            res.add(new ArrayList<>(lists));
         }
 
-        for ( int i = start; i < candidates.length; i++ )
-        {
-            if ( target - candidates[ i ] < 0 ) continue;
-            list.add( candidates[ i ] );
-
-            back( candidates, target - candidates[ i ], i + 1, list );
-
-            list.remove( list.size() - 1 );
-            if ( i + 1 < candidates.length && candidates[ i ] == candidates[ i + 1 ] )
-            {
-                int count = num( candidates, i );
-                i += count;
-            }
+        for (int j = i; j < candidates.length; j++) {
+            if (j > i && candidates[j] == candidates[j - 1]) continue;
+            lists.add(candidates[j]);
+            dfs(candidates, j + 1, lists, target, sum + candidates[j]);
+            lists.remove(lists.size() - 1);
         }
     }
 
-    static int num( int[] candidates, int start )
-    {
-        int count = 0;
-        int temp = candidates[ start ];
-        for ( int i = start + 1; i < candidates.length; i++ )
-        {
-            if ( temp == candidates[ i ] )
-            {
-                count++;
-            }
-        }
-        return count;
-    }
 
-    public static void main( String[] args )
-    {
-        int[] arr = new int[] { 1, 1 };
-        System.out.println( combinationSum2( arr, 1 ) );
+    public static void main(String[] args) {
+        Leet40 test = new Leet40();
+        test.combinationSum2(new int[]{10, 1, 2, 7, 6, 1, 5}, 8);
     }
 }

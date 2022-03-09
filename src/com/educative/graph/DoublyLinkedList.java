@@ -54,9 +54,10 @@ public class DoublyLinkedList<T> {
             tailNode.nextNode = node;
             node.prevNode = tailNode;
         } else {
-            tailNode = node;
+
             headNode = node;
         }
+        tailNode = node;
         size++;
     }
 

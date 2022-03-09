@@ -2,43 +2,37 @@ package com.amazon.interview;
 
 import java.util.Stack;
 
-public class Leet394
-{
-    public String decodeString( String s )
-    {
+public class Leet394 {
+    public String decodeString(String s) {
+        Stack<Integer> numberStack = new Stack<>();
+        Stack<String> charStack = new Stack<>();
+        int number = 0;
         StringBuilder sb = new StringBuilder();
-        Stack< Integer > times = new Stack<>();
-        Stack< String > stack = new Stack<>();
-        int num = 0;
-        for ( int i = 0; i < s.length(); i++ )
-        {
-            char ch = s.charAt( i );
-            if ( Character.isDigit( ch ) )
-            {
-                num = num * 10 + ( ch - '0' );
-            }
-            else if ( ch == '[' )
-            {
-                times.push( num );
-                num = 0;
-                stack.push( sb.toString() );
-                sb = new StringBuilder();
-            }
-            else if ( ch == ']' )
-            {
-                int n = times.pop();
-                StringBuilder sub = new StringBuilder();
-                for ( int i1 = 0; i1 < n; i1++ )
-                {
-                    sub.append( sb );
-                }
-                sb = new StringBuilder( stack.pop() + sub.toString() );
-            }
-            else
-            {
-                sb.append( ch );
-            }
 
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (Character.isDigit(ch)) {
+                number = number * 10 + (ch - '0');
+            } else if (Character.isLetter(ch)) {
+                sb.append(ch);
+            } else if (ch == '[') {
+                numberStack.push(number);
+                charStack.push(sb.toString());
+                number = 0;
+                sb = new StringBuilder();
+            } else {
+                int n = numberStack.pop();
+                StringBuilder inner = new StringBuilder();
+                StringBuilder prev = new StringBuilder(charStack.pop());
+                for (int j = 0; j < n; j++) {
+                    inner.append(sb);
+                }
+
+
+                prev.append(inner);
+                sb = new StringBuilder();
+                sb.append(prev);
+            }
         }
         return sb.toString();
     }

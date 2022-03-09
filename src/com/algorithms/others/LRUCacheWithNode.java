@@ -3,102 +3,73 @@ package com.algorithms.others;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LRUCacheWithNode
-{
-    class Node
-    {
+public class LRUCacheWithNode {
+    class Node {
         int key;
         int val;
-        Node prev;
         Node next;
+        Node prev;
 
-        public Node( int key, int val )
-        {
+        public Node(int key, int val) {
             this.key = key;
             this.val = val;
         }
     }
 
+    Node head = new Node(-1, -1);
+    Node tail = new Node(-1, -1);
     int capacity;
-    Node head;
-    Node tail;
-    Map< Integer, Node > map = new HashMap<>();
+    Map<Integer, Node> map = new HashMap<>();
 
-    public LRUCacheWithNode( int capacity )
-    {
+    public LRUCacheWithNode(int capacity) {
         this.capacity = capacity;
-        head = new Node( 0, 0 );
-        tail = new Node( 0, 0 );
         head.next = tail;
         tail.prev = head;
     }
 
-    public int get( int key )
-    {
-        if ( !map.containsKey( key ) ) return -1;
-        Node node = map.get( key );
+    public int get(int key) {
+        if (!map.containsKey(key)) return -1;
+        Node node = map.get(key);
         int val = node.val;
-        removeNode( node );
-        moveNodeToTail( node );
+        removeNode(node);
+        addToHead(node);
         return val;
     }
 
-    private void moveNodeToTail( Node node )
-    {
-        Node prev = tail.prev;
-        prev.next = node;
-        node.next = tail;
-        node.prev = prev;
-        tail.prev = node;
-    }
-
-    private void removeNode( Node node )
-    {
+    private void removeNode(Node node) {
         Node prev = node.prev;
-        prev.next = node.next;
-        node.next.prev = prev;
+        Node next = node.next;
+        prev.next = next;
+        next.prev = prev;
     }
 
-    public void put( int key, int value )
-    {
-        if ( map.size() < capacity )
-        {
-            if ( map.containsKey( key ) )
-            {
-                Node node = map.get( key );
-                node.val = value;
-                removeNode( node );
-                moveNodeToTail( node );
-                map.put( key, node );
-            }
-            else
-            {
-                Node node = new Node( key, value );
-                moveNodeToTail( node );
-                map.put( key, node );
-            }
+    private void addToHead(Node node) {
+        Node next = head.next;
+        head.next = node;
+        node.prev = head;
+        node.next = next;
+        next.prev = node;
+    }
 
+    public void put(int key, int value) {
+        if (map.containsKey(key)) {
+            Node node = map.get(key);
+            node.val = value;
+            removeNode(node);
+            addToHead(node);
+            return;
         }
-        else
-        {
-            if ( map.containsKey( key ) )
-            {
-                Node node = map.get( key );
-                node.val = value;
-                removeNode( node );
-                moveNodeToTail( node );
-                map.put( key, node );
-
-            }
-            else
-            {
-                Node node = new Node( key, value );
-                map.remove( head.next.key );
-                removeNode( head.next );
-
-                moveNodeToTail( node );
-                map.put( key, node );
-            }
+        Node node = new Node(key, value);
+        if (map.size() < capacity) {
+            map.put(key, node);
+            addToHead(node);
+        } else {
+            int removedKey = tail.prev.key;
+            map.remove(removedKey);
+            removeNode(tail.prev);
+            map.put(key, node);
+            addToHead(node);
         }
     }
+
 }

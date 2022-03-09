@@ -4,49 +4,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Leet90
-{
-    static List< List< Integer > > results = new ArrayList<>();
+public class Leet90 {
+    List<List<Integer>> results = new ArrayList<>();
 
-    public static List< List< Integer > > subsetsWithDup( int[] nums )
-    {
-        if ( nums == null || nums.length == 0 ) return new ArrayList<>();
-        Arrays.sort( nums );
-        back( nums, 0, new ArrayList< Integer >() );
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        dfs(nums, new ArrayList<Integer>(), 0);
         return results;
     }
 
-    private static void back( int[] nums, int start, ArrayList< Integer > list )
-    {
-        results.add( new ArrayList<>( list ) );
-
-        for ( int i = start; i < nums.length; i++ )
-        {
-            list.add( nums[ i ] );
-            back( nums, i + 1, list );
-            list.remove( list.size() - 1 );
-            if ( i + 1 < nums.length && nums[ i ] == nums[ i + 1 ] )
-            {
-                int count = numOfDup( nums, nums[ i ], i );
-                i += count;
-                continue;
-            }
+    private void dfs(int[] nums, ArrayList<Integer> list, int start) {
+        results.add(new ArrayList<>(list));
+        for (int i = start; i < nums.length; i++) {
+            if (i > start && nums[i] == nums[i - 1]) continue;
+            list.add(nums[i]);
+            dfs(nums, list, i + 1);
+            list.remove(list.size() - 1);
         }
-    }
-
-    private static int numOfDup( int[] nums, int val, int index )
-    {
-        int count = 0;
-        for ( int i = index + 1; i < nums.length; i++ )
-        {
-            if ( nums[ i ] == val ) count++;
-        }
-        return count;
-    }
-
-    public static void main( String[] args )
-    {
-        int[] arr = new int[] { 5, 5, 5, 5, 5 };
-        System.out.println( subsetsWithDup( arr ) );
     }
 }

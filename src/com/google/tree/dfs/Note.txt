@@ -1,0 +1,2 @@
+when each element need to be retrieved, then the visited has to be reset to false after each iteration, like Leet212 wordSearch
+otherwise, don't need to reset visited like Island number
