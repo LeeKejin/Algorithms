@@ -1,49 +1,59 @@
 package com.algorithms.dynamicprogramming;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.crackingcodeinterview.util.ListNode;
+import com.google.tree.TreeNode;
+import com.google.tree.utility.TreeUtil;
+import com.sun.xml.internal.txw2.output.DumpSerializer;
 
-public class Test
-{
-    public int canJump( int[] nums )
-    {
-        int right = 0;
-        int end = 0;
-        int step = 0;
-        for ( int i = 0; i < nums.length; i++ )
-        {
-            right = Math.max( right, nums[ i ] + i );
-            if ( i == end )
-            {
-                end = right;
-                step++;
-            }
+import java.math.BigDecimal;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Random;
+import java.util.Set;
+import java.util.Stack;
+import java.util.TreeMap;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+
+public class Test {
+    private static final int MOD = 1000000007;
+    boolean flag = false;
+    Set<Integer> set = new HashSet<>();
+
+    public String breakPalindrome(String palindrome) {
+        if (palindrome.length() <= 1) return "";
+        int i;
+        char chs[] = palindrome.toCharArray();
+
+        for (i = 0; i < palindrome.length() / 2; i++) {
+            if (palindrome.charAt(i) != 'a') break;
         }
-        return step;
+        if (i == palindrome.length() / 2) {
+
+            chs[palindrome.length() - 1] = 'b';
+            return String.valueOf(chs);
+        }
+        chs[i] = 'a';
+        return String.valueOf(chs);
     }
 
-    public static void main( String[] args )
-    {
+    public static void main(String[] args) {
+        Test test = new Test();
 
-        int[][] arr = new int[][] { { 3, 3 }, { 5, -1 }, { -2, 4 } };
-        //        int[][] arr = new int[][] { { 1, 5, 3 }, { 2, 9, 4 } };
-        int d = 'e';
-        List< String > list = new ArrayList<>();
-        list.add( "apple" );
-        list.add( "pen" );
-        list.add( "applepen" );
-        list.add( "pine" );
-        list.add( "pineapple" );
-        int k = 4;
-        int n = arr.length;
-        Test t = new Test();
-        char[][] chs = new char[][] {
-            { 'A', 'B', 'C', 'E' },
-            { 'S', 'F', 'C', 'S' },
-            { 'A', 'D', 'E', 'E' } };
-        //        char[][] chs = new char[][] {
-        //            { 'a' },
-        //            { 'a' } };
-        //
+        TreeNode node = TreeUtil.deserialize("[5,3,6,2,4,null,7]");
+//        test.threeSumClosest(new int[]{4, 0, 5, -5, 3, 3, 0, -4, -5}, -2);
+        test.findTarget(node, 9);
     }
 }

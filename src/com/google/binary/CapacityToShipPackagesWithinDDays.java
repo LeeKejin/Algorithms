@@ -1,39 +1,42 @@
 package com.google.binary;
 
+import java.util.Arrays;
+
+//https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/
 public class CapacityToShipPackagesWithinDDays {
     public int shipWithinDays(int[] weights, int days) {
-        if (days == 0) return 0;
-        int l = 0;
-        int r = 0;
-        for (int w : weights) {
-            l = Math.max(l, w);
-            r += w;
-        }
-        int res = r;
+        int sum = Arrays.stream(weights).sum();
+        int l = Arrays.stream(weights).max().getAsInt();
+        int r = sum;
+        int res = 0;
         while (l <= r) {
             int mid = l + (r - l) / 2;
-            if (check(mid, weights, days)) {
-                res = Math.min(mid, res);
+            if (canShip(weights, days, mid)) {
+                res = mid;
                 r = mid - 1;
             } else {
                 l = mid + 1;
             }
         }
-        if (check(r, weights, days)) return Math.min(r, res);
         return res;
     }
 
-    private boolean check(int mid, int[] weights, int days) {
-        int load = 0;
+    private boolean canShip(int[] weights, int days, int mid) {
+        int sum = 0;
+        int cur = 0;
         for (int i = 0; i < weights.length; i++) {
-            if (weights[i] > mid) return false;
-            if (load + weights[i] > mid) {
-                load = 0;
-                days--;
+            sum += weights[i];
+            if (sum > mid) {
+                sum = weights[i];
+                cur++;
             }
-            load += weights[i];
         }
-        return days >= 1;
+        return cur < days;
     }
 
+    public static void main(String[] args) {
+        int[] arr = new int[]{1, 2, 3, 1, 2};
+        CapacityToShipPackagesWithinDDays search = new CapacityToShipPackagesWithinDDays();
+        System.out.println(search.shipWithinDays(arr, 4));
+    }
 }

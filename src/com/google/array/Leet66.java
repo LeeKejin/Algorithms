@@ -27,4 +27,9 @@ public class Leet66 {
         }
         return res;
     }
+
+    public static void main(String[] args) {
+        Leet66 test = new Leet66();
+        test.plusOne(new int[]{129});
+    }
 }

@@ -1,6 +1,7 @@
 package com.google.array;
 
 public class SwapAdjacentInLRString {
+    //in start L always move forward, while R always move backward
     public boolean canTransform(String start, String end) {
         if (start.length() != end.length() ||
                 (!start.replaceAll("X", "").equals(end.replaceAll("X", "")))) return false;
@@ -16,6 +17,8 @@ public class SwapAdjacentInLRString {
             if (i == start.length() && j == end.length()) return true;
             if (i == start.length() || j == end.length()) return false;
             if (start.charAt(i) != end.charAt(j)) return false;
+            //in start L always move forward, while R always move backward
+
             if (start.charAt(i) == 'L' && i < j) return false;
             if (start.charAt(i) == 'R' && i > j) return false;
             i++;

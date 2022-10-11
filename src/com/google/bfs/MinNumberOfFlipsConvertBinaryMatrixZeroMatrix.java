@@ -20,7 +20,7 @@ public class MinNumberOfFlipsConvertBinaryMatrixZeroMatrix {
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int k = 0; k < size; k++) {
-                int[][] cur = queue.poll();
+                    int[][] cur = queue.poll();
                 if (check(cur)) return step;
 
                 for (int i = 0; i < m; i++) {

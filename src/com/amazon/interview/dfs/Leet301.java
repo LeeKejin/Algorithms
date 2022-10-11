@@ -107,5 +107,11 @@ public class Leet301 {
             dfs(set, s, i + 1, stringBuilder, left, right, diff);
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
+
+    }
+
+    public static void main(String[] args) {
+        Leet301 test = new Leet301();
+        test.removeInvalidParentheses(")(");
     }
 }

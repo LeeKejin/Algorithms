@@ -1,7 +1,10 @@
 package com.amazon.interview;
 
 import java.util.Stack;
-
+//https://leetcode.com/problems/decode-string/
+//compress string
+//compression
+//"3[a]2[bc]"-> aaabcbc
 public class Leet394 {
     public String decodeString(String s) {
         Stack<Integer> numberStack = new Stack<>();

@@ -48,7 +48,7 @@ public class WordLadder {
         }
         return 0;
     }
-    /*
+    /**
     Time Complexity: O({M}^2 \times N)O(M
 2
  ×N), where MM is the length of each word and NN is the total number of words in the input word list.

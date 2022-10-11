@@ -10,18 +10,19 @@ public class LongestStringChain {
     N is words number, L is word length
      */
     public int longestStrChain(String[] words) {
-        Arrays.sort(words, ((a, b) -> (a.length() - b.length())));
+        if (words.length == 0) return 0;
+        Arrays.sort(words, (a, b) -> (a.length() == b.length() ? a.compareTo(b) : a.length() - b.length()));
         Map<String, Integer> map = new HashMap<>();
         map.put(words[0], 1);
         int res = 1;
         for (int i = 1; i < words.length; i++) {
-
+            map.put(words[i], 1);
             for (int j = 0; j < words[i].length(); j++) {
                 StringBuilder sb = new StringBuilder(words[i]);
                 sb = sb.deleteCharAt(j);
-                int v = map.getOrDefault(sb.toString(), 0);
-                int n = Math.max(map.getOrDefault(words[i], 1), v + 1);
-                map.put(words[i], n);
+                if (map.containsKey(sb.toString()) && map.get(sb.toString()) + 1 > map.get(words[i])) {
+                    map.put(words[i], map.get(sb.toString()) + 1);
+                }
             }
             res = Math.max(res, map.get(words[i]));
         }

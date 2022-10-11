@@ -5,20 +5,19 @@ import java.util.Set;
 
 public class Leet3 {
     public int lengthOfLongestSubstring(String s) {
-        int left = 0;
-        int right = -1;
-        int res = 0;
+        int i = 0;
+        int start = 0;
         int[] freq = new int[256];
-        char[] chars = s.toCharArray();
-        while (left < s.length()) {
-            if (right + 1 < s.length() && freq[chars[right + 1]] == 0) {
-                right++;
-                freq[chars[right]]++;
+        int res = 0;
+        while (i < s.length()) {
+            if (freq[s.charAt(i)] == 0) {
+                freq[s.charAt(i)]++;
+                i++;
             } else {
-                freq[chars[left]]--;
-                left++;
+                freq[s.charAt(start)]--;
+                start++;
             }
-            res = Math.max(res, right - left + 1);
+            res = Math.max(res, i - start);
         }
         return res;
     }

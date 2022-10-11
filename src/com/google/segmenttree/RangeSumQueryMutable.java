@@ -91,4 +91,10 @@ public class RangeSumQueryMutable {
     public int sumRange(int left, int right) {
         return segmentTree.query(left, right);
     }
+
+    public static void main(String[] args) {
+//        RangeSumQueryMutable test = new RangeSumQueryMutable(new int[]{1, 3, 6, 8, 5});
+        RangeSumQueryMutable test = new RangeSumQueryMutable(new int[]{1, 2, 3});
+//        test.update(2, 3);
+    }
 }

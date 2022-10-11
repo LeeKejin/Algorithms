@@ -57,6 +57,50 @@ public class StudentAttendanceRecordII {
         return (int) ans;
     }
 
+    /**
+     * Brutial force
+     *
+     * @param args
+     */
+    /*
+      long res = 0;
+
+    public int checkRecord(int n) {
+        dfs(n, 0, 'P', 0, 0);
+        return (int)(res % 1000000007);
+    }
+
+    void dfs(int n, int cur, char lastAppend, int aCount, int lCount) {
+        if (n == cur) {
+            res++;
+            return;
+        }
+        if (lastAppend != 'A' && lastAppend != 'L') {
+            lCount = 0;
+            dfs(n, cur + 1, 'P', aCount, lCount);
+            if (aCount < 1) {
+                dfs(n, cur + 1, 'A', aCount + 1, lCount);
+            }
+            dfs(n, cur + 1, 'L', aCount, lCount + 1);
+        } else if (lastAppend == 'A') {
+            lCount = 0;
+            dfs(n, cur + 1, 'P', aCount, lCount);
+            if (aCount < 1) {
+                dfs(n, cur + 1, 'A', aCount + 1, lCount);
+            }
+            dfs(n, cur + 1, 'L', aCount, lCount + 1);
+        } else if (lastAppend == 'L') {
+            dfs(n, cur + 1, 'P', aCount, lCount);
+            if (aCount < 1) {
+                dfs(n, cur + 1, 'A', aCount + 1, lCount);
+            }
+            if (lCount < 2) {
+                dfs(n, cur + 1, 'L', aCount, lCount + 1);
+            }
+        }
+
+    }
+     */
     public static void main(String[] args) {
         StudentAttendanceRecordII test = new StudentAttendanceRecordII();
         test.checkRecordDP(4);

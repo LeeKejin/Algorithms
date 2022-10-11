@@ -64,28 +64,33 @@ public class FindOriginalArrayFromDoubledArray {
         return res;
     }
 
-    public int[] findOriginalArrayWithoutHashMap(int[] changed) {
-        if (changed.length == 0 || changed.length % 2 != 0) return new int[]{};
-        int freq[] = new int[100001];
-        for (int change : changed) {
-            freq[change]++;
-        }
-        List<Integer> list = new ArrayList<>();
-        Arrays.sort(changed);
+    /**
+     * Faster Nasty
+     */
+    public int[] findOriginalArrayFaster(int[] changed) {
+        if (changed.length % 2 != 0) return new int[]{};
+        int max = Arrays.stream(changed).max().getAsInt();
+        int visited[] = new int[max + 1];
         for (int i = 0; i < changed.length; i++) {
-            if (freq[changed[i]] > 0 && changed[i] * 2 < 100001 && freq[changed[i] * 2] > 0) {
-                freq[changed[i]]--;
-                freq[changed[i] * 2]--;
-                list.add(changed[i]);
+            visited[changed[i]]++;
+        }
+        List<Integer> set = new ArrayList<>();
+        if (visited[0] != 0 && visited[0] < 2) return new int[]{};//for edge cases [1,2,1,0]
+        for (int i = 0; i < visited.length; i++) {
+            if (visited[i] > 0 && (i * 2 > max || visited[i * 2] <= 0)) return new int[]{};
+            while (visited[i] > 0 && i * 2 <= max && visited[i * 2] > 0) {
+                set.add(i);
+                visited[i]--;
+                visited[i * 2]--;
             }
+
         }
-        if (list.size() != changed.length / 2) return new int[]{};
-        for (int i = 0; i < freq.length; i++) {
-            if (freq[i] != 0) return new int[]{};
-        }
-        int res[] = new int[list.size()];
-        for (int i = 0; i < res.length; i++) {
-            res[i] = list.get(i);
+        if (set.size() < changed.length / 2) return new int[]{};
+        int[] res = new int[set.size()];
+        int j = 0;
+        for (int val : set) {
+            res[j] = val;
+            j++;
         }
         return res;
     }

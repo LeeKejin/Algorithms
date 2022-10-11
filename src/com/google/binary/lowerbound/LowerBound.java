@@ -106,7 +106,7 @@ public class LowerBound {
 
     int searchLowBoundary(int arr[], int target) {
         int l = 0;
-        int r = arr.length;
+        int r = arr.length - 1;
         while (l < r) {
             int mid = l + (r - l + 1) / 2;
             if (arr[mid] <= target) {
@@ -134,30 +134,30 @@ public class LowerBound {
         return r;//l
     }
 
-    int searchDiff(int[] arr, int target) {
-        int l = 0;
-        int r = arr.length;
-        while (l < r) {
-            int mid = l + (r - l) / 2;
-            if (arr[mid] == target) return mid;
-            if (arr[mid] < target) {
-                l = mid + 1;
-            } else {
-                r = mid - 1;
-            }
-        }
-        return r;//l
-    }
+//    int searchDiff(int[] arr, int target) {
+//        int l = 0;
+//        int r = arr.length;
+//        while (l < r) {
+//            int mid = l + (r - l + 1) / 2;
+//            if (arr[mid] <= target) {
+//                l = mid;
+//            } else {
+//                r = mid - 1;
+//            }
+//        }
+//        return l;//l
+//    }
 
     public static void main(String[] args) {
         LowerBound lb = new LowerBound();
+        System.out.println(lb.searchLowBoundary(new int[]{1, 2, 3, 4, 9}, 9));//5-->l
 //        System.out.println(lb.searchHighBoundary(new int[]{1, 2, 3, 4, 7, 7, 9}, 8));
 //        System.out.println(lb.searchLowBoundary(new int[]{1, 2, 3, 4, 7, 7, 9}, 8));
 
-        System.out.println(lb.search(new int[]{1, 2, 3, 4, 9}, 10));//5-->l
-        System.out.println(lb.search(new int[]{1, 2, 3, 4, 9}, 10));//4-->r
-        System.out.println(lb.search(new int[]{1, 2, 3, 4, 9}, 0));//0-->l
-        System.out.println(lb.search(new int[]{1, 2, 3, 4, 9}, 0));//-1-->r
+//        System.out.println(lb.search(new int[]{1, 2, 3, 4, 9}, 10));//5-->l
+//        System.out.println(lb.search(new int[]{1, 2, 3, 4, 9}, 10));//4-->r
+//        System.out.println(lb.search(new int[]{1, 2, 3, 4, 9}, 0));//0-->l
+//        System.out.println(lb.search(new int[]{1, 2, 3, 4, 9}, 0));//-1-->r
 
 //        System.out.println(lb.lowerBound(new int[]{5, 5, 7, 7, 8, 8, 10}, 6));//1
 //        System.out.println(lb.lowerBound(new int[]{5, 5, 7, 7, 8, 8, 10}, 4));

@@ -26,10 +26,10 @@ public class Leet31 {
                     break;
                 }
             }
-            if (index2 != -1) {
-                swap(nums, index1, index2);
-
-            }
+            //index2 is impossible to be -1, otherwise index1 would be -1
+//            if (index2 != -1) {
+            swap(nums, index1, index2);
+//            }
         }
         reverse(nums, index1 + 1, nums.length - 1);
     }

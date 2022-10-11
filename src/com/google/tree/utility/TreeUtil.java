@@ -8,7 +8,7 @@ import java.util.Queue;
 
 public class TreeUtil {
 
-    public String serialize(TreeNode root) {
+    public static String serialize(TreeNode root) {
         if (root == null) return "[]";
         Queue<TreeNode> queue = new LinkedList<>();
         StringBuilder sb = new StringBuilder();
@@ -31,7 +31,7 @@ public class TreeUtil {
     }
 
     // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
+    public static TreeNode deserialize(String data) {
         if (data == "[]") return null;
         String str = data.substring(1, data.length() - 1);
         String[] arr = str.split(",");

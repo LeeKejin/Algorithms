@@ -30,12 +30,14 @@ public class RaceCar {
             for (int i = 0; i < size; i++) {
                 State state = queue.poll();
                 if (state.pos == target) return step;
+                //A
                 int nextP = state.pos + state.speed;
                 int nextS = state.speed * 2;
                 if (!visited.contains(nextP + "," + nextS) && Math.abs(target - nextP) < target) {
                     queue.add(new State(nextP, nextS));
                     visited.add(nextP + "," + nextS);
                 }
+                //R
                 nextP = state.pos;
                 nextS = state.speed > 0 ? -1 : 1;
                 if (!visited.contains(nextP + "," + nextS) && Math.abs(target - nextP) < target) {

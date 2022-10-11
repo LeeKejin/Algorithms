@@ -1,10 +1,6 @@
 package com.google.sorting;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 //https://leetcode.com/problems/merge-intervals/
 //leet56
@@ -51,29 +47,48 @@ public class MergeIntervals {
     }
 
     public int[][] mergeSorting(int[][] intervals) {
-        Queue<int[]> queue = new LinkedList<>();
-        Arrays.sort(intervals, ((a, b) -> (a[0] - b[0])));
-        List<int[]> list = new ArrayList<>();
-        for (int i = 0; i < intervals.length; i++) {
+        Arrays.sort(intervals, (a, b) -> (a[0] == b[0] ? a[1] - b[1] : a[0] - b[0]));
+        Stack<int[]> queue = new Stack<>();
+        for (int[] interval : intervals) {
             if (queue.isEmpty()) {
-                queue.add(intervals[i]);
+                queue.add(interval);
             } else {
-                if (queue.peek()[0] <= intervals[i][0] && intervals[i][0] <= queue.peek()[1]) {
-                    int[] existing = queue.poll();
-                    queue.add(new int[]{Math.min(existing[0], intervals[i][0]), Math.max(existing[1], intervals[i][1])});
+                int[] pair = queue.peek();
+                if ((interval[0] >= pair[0] && interval[0] <= pair[1])
+                        || (interval[1] >= pair[0] && interval[1] <= pair[1])) {
+                    queue.pop();
+                    queue.add(new int[]{Math.min(pair[0], interval[0]), Math.max(pair[1], interval[1])});
                 } else {
-                    list.add(queue.poll());
-                    queue.add(intervals[i]);
+                    queue.add(interval);
                 }
             }
         }
-        if (!queue.isEmpty()) {
-            list.add(queue.poll());
-        }
-        int[][] res = new int[list.size()][2];
-        for (int i = 0; i < res.length; i++) {
-            res[i] = list.get(i);
+        int res[][] = new int[queue.size()][2];
+        int i = 0;
+        while (!queue.isEmpty()) {
+            res[i] = queue.pop();
+            i++;
         }
         return res;
+    }
+
+    /**
+     * Linked list
+     */
+    public int[][] merge1(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> (a[0] - b[0]));
+        LinkedList<int[]> list = new LinkedList<>();
+
+        for (int i = 0; i < intervals.length; i++) {
+            if (list.isEmpty() || intervals[i][0] > list.getLast()[1]) {
+                list.add(intervals[i]);
+                continue;
+            }
+            if (intervals[i][1] >= list.getLast()[1]) {
+                int[] last = list.removeLast();
+                list.add(new int[]{Math.min(intervals[i][0], last[0]), Math.max(intervals[i][1], last[1])});
+            }
+        }
+        return list.toArray(new int[list.size()][2]);
     }
 }
